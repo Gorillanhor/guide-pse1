@@ -1,0 +1,2209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#c41e3a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Guide PSE1">
+<meta name="application-name" content="Guide PSE1">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='36' fill='%23c41e3a'/><text x='50%25' y='58%25' text-anchor='middle' font-size='110' font-weight='900' fill='white' font-family='-apple-system,Arial'>+</text></svg>">
+<title>CETC - Guide d'Intervention PSE1</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --primary: #c41e3a; --primary-dark: #8b0000; --secondary: #1e3a8a;
+  --accent: #f59e0b; --bg: #f8fafc; --card: #ffffff;
+  --text: #1e293b; --text-light: #64748b; --border: #e2e8f0;
+  --success: #10b981; --warning: #f59e0b; --danger: #ef4444;
+}
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+header { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; padding: 1rem 1.5rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+.header-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.logo { display: flex; align-items: center; gap: 0.75rem; font-weight: 700; font-size: 1.25rem; }
+.logo-icon { width: 40px; height: 40px; background: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.5rem; font-weight: 900; }
+.subtitle { font-size: 0.85rem; opacity: 0.9; font-weight: 400; }
+.search-box { flex: 1; max-width: 400px; position: relative; }
+.search-box input { width: 100%; padding: 0.6rem 1rem 0.6rem 2.5rem; border: none; border-radius: 6px; font-size: 0.95rem; background: rgba(255,255,255,0.95); color: var(--text); }
+.search-box::before { content: "🔍"; position: absolute; left: 0.8rem; top: 50%; transform: translateY(-50%); }
+.emergency-banner { background: #fef3c7; border-bottom: 2px solid var(--accent); padding: 0.75rem 1.5rem; text-align: center; font-weight: 600; color: #78350f; font-size: 0.95rem; }
+.emergency-banner strong { color: var(--primary); font-size: 1.05rem; }
+.container { max-width: 1400px; margin: 0 auto; padding: 1.5rem; display: grid; grid-template-columns: 280px 1fr; gap: 1.5rem; }
+.sidebar { background: var(--card); border-radius: 12px; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); height: fit-content; position: sticky; top: 100px; max-height: calc(100vh - 120px); overflow-y: auto; }
+.sidebar h3 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-light); margin-bottom: 0.75rem; margin-top: 1rem; }
+.sidebar h3:first-child { margin-top: 0; }
+.nav-list { list-style: none; }
+.nav-list li { margin-bottom: 0.25rem; }
+.nav-list button { width: 100%; text-align: left; padding: 0.6rem 0.85rem; background: transparent; border: none; border-radius: 6px; font-size: 0.92rem; color: var(--text); cursor: pointer; display: flex; align-items: center; gap: 0.6rem; transition: all 0.15s; font-family: inherit; }
+.nav-list button:hover { background: var(--bg); color: var(--primary); }
+.nav-list button.active { background: var(--primary); color: white; font-weight: 600; }
+.nav-list button.special { background: linear-gradient(135deg, var(--accent), #d97706); color: white; font-weight: 600; }
+.nav-list button.special:hover { background: linear-gradient(135deg, #d97706, var(--accent)); color: white; }
+.nav-icon { font-size: 1.1rem; flex-shrink: 0; }
+.section { display: none; animation: fadeIn 0.3s ease; }
+.section.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.section-header { background: var(--card); padding: 1.5rem 2rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 5px solid var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.section-header h1 { font-size: 1.75rem; color: var(--primary-dark); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.section-header p { color: var(--text-light); font-size: 0.95rem; }
+.card { background: var(--card); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid var(--border); }
+.card h2 { font-size: 1.3rem; color: var(--secondary); margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 2px solid var(--bg); display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.card h2 > span:first-child { flex: 1; min-width: 0; }
+.card h3 { font-size: 1.1rem; color: var(--text); margin: 1.25rem 0 0.75rem 0; }
+.card p { margin-bottom: 0.75rem; }
+.card ul, .card ol { margin: 0.75rem 0 0.75rem 1.5rem; }
+.card li { margin-bottom: 0.4rem; }
+.steps { list-style: none; margin: 0 !important; counter-reset: step; }
+.steps li { counter-increment: step; padding: 0.85rem 0.85rem 0.85rem 3rem; margin-bottom: 0.6rem; background: var(--bg); border-radius: 8px; position: relative; border-left: 3px solid var(--primary); }
+.steps li::before { content: counter(step); position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; }
+.alert { padding: 1rem 1.25rem; border-radius: 8px; margin: 1rem 0; display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.95rem; }
+.alert-icon { font-size: 1.4rem; flex-shrink: 0; }
+.alert-danger { background: #fef2f2; border-left: 4px solid var(--danger); color: #7f1d1d; }
+.alert-warning { background: #fffbeb; border-left: 4px solid var(--warning); color: #78350f; }
+.alert-info { background: #eff6ff; border-left: 4px solid var(--secondary); color: #1e3a8a; }
+.alert-success { background: #f0fdf4; border-left: 4px solid var(--success); color: #14532d; }
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1rem 0; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1rem 0; }
+.mini-card { background: var(--bg); padding: 1rem; border-radius: 8px; border: 1px solid var(--border); }
+.mini-card h4 { color: var(--primary); margin-bottom: 0.5rem; font-size: 1rem; }
+.table-wrapper { overflow-x: auto; margin: 1rem 0; }
+table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+th { background: var(--secondary); color: white; padding: 0.75rem; text-align: left; font-size: 0.9rem; font-weight: 600; }
+td { padding: 0.75rem; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+tr:last-child td { border-bottom: none; }
+tr:hover { background: var(--bg); }
+.hero { background: linear-gradient(135deg, var(--secondary) 0%, var(--primary-dark) 100%); color: white; padding: 2.5rem 2rem; border-radius: 12px; margin-bottom: 1.5rem; }
+.hero h1 { font-size: 2rem; margin-bottom: 0.75rem; }
+.hero p { opacity: 0.95; font-size: 1.05rem; max-width: 700px; }
+.quick-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+.quick-card { background: var(--card); padding: 1.25rem; border-radius: 12px; cursor: pointer; transition: all 0.2s; border: 2px solid transparent; text-align: left; font-family: inherit; width: 100%; }
+.quick-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); border-color: var(--primary); }
+.quick-card-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.quick-card h3 { color: var(--primary-dark); margin-bottom: 0.4rem; font-size: 1.05rem; }
+.quick-card p { font-size: 0.85rem; color: var(--text-light); margin: 0; }
+.quick-card.highlight { background: linear-gradient(135deg, var(--accent), #d97706); color: white; }
+.quick-card.highlight h3, .quick-card.highlight p { color: white; }
+.diagram { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin: 1rem 0; }
+.diagram svg { width: 100%; height: auto; display: block; }
+.diagram-caption { text-align: center; font-size: 0.85rem; color: var(--text-light); margin-top: 0.5rem; font-style: italic; }
+.mobile-toggle { display: none; background: white; color: var(--primary); border: none; padding: 0.5rem 0.85rem; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.9rem; }
+@media (max-width: 900px) {
+  .container { grid-template-columns: 1fr; padding: 1rem; }
+  .sidebar { position: fixed; top: 0; left: -100%; width: 280px; height: 100vh; z-index: 200; transition: left 0.3s; border-radius: 0; max-height: 100vh; padding-top: 4rem; }
+  .sidebar.open { left: 0; box-shadow: 4px 0 20px rgba(0,0,0,0.2); }
+  .mobile-toggle { display: block; }
+  .hero h1 { font-size: 1.5rem; }
+  .section-header h1 { font-size: 1.4rem; }
+  .search-box { max-width: 100%; order: 3; flex-basis: 100%; }
+  .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 150; }
+  .overlay.active { display: block; }
+}
+.checklist { list-style: none; margin: 0 !important; }
+.checklist li { padding: 0.6rem 0.85rem 0.6rem 2.25rem; margin-bottom: 0.4rem; background: var(--bg); border-radius: 6px; position: relative; font-size: 0.95rem; }
+.checklist li::before { content: "✓"; position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; background: var(--success); color: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; }
+footer { text-align: center; padding: 1.5rem; color: var(--text-light); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 2rem; }
+
+.pdf-help { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; min-width: 24px; border-radius: 50%; background: var(--secondary); color: white; border: none; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.15s; font-family: inherit; padding: 0; line-height: 1; }
+.pdf-help:hover { background: var(--primary); transform: scale(1.15); box-shadow: 0 2px 8px rgba(196,30,58,0.3); }
+.pdf-help.small { width: 20px; height: 20px; min-width: 20px; font-size: 0.65rem; }
+.section-header .pdf-help { background: var(--primary); }
+.section-header .pdf-help:hover { background: var(--primary-dark); }
+.pdf-info { background: #eff6ff; border-left: 3px solid var(--secondary); padding: 0.6rem 0.85rem; border-radius: 6px; font-size: 0.85rem; color: #1e3a8a; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+
+/* PDF VIEWER MODAL */
+.pdf-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 500; display: none; flex-direction: column; }
+.pdf-modal.active { display: flex; }
+.pdf-toolbar { background: #1e293b; color: white; padding: 0.6rem 1rem; display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+.pdf-toolbar-title { font-weight: 700; font-size: 0.95rem; flex: 1; min-width: 0; }
+.pdf-toolbar button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 0.4rem 0.7rem; border-radius: 5px; cursor: pointer; font-family: inherit; font-size: 0.85rem; font-weight: 600; transition: all 0.15s; }
+.pdf-toolbar button:hover:not(:disabled) { background: rgba(255,255,255,0.2); }
+.pdf-toolbar button:disabled { opacity: 0.4; cursor: not-allowed; }
+.pdf-toolbar button.primary { background: var(--accent); border-color: var(--accent); }
+.pdf-toolbar button.primary:hover { background: #d97706; }
+.pdf-toolbar button.danger { background: var(--danger); border-color: var(--danger); }
+.pdf-toolbar button.danger:hover { background: #b91c1c; }
+.pdf-toolbar input { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 0.4rem 0.5rem; border-radius: 5px; width: 60px; text-align: center; font-family: inherit; font-size: 0.85rem; font-weight: 600; }
+.pdf-toolbar input::-webkit-outer-spin-button, .pdf-toolbar input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.pdf-page-info { color: #cbd5e1; font-size: 0.85rem; padding: 0 0.4rem; white-space: nowrap; }
+.pdf-canvas-wrapper { flex: 1; overflow: auto; display: flex; justify-content: center; padding: 1rem; background: #475569; }
+.pdf-canvas-wrapper canvas { background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.4); max-width: 100%; height: auto; }
+.pdf-loading, .pdf-empty { color: white; padding: 3rem 2rem; text-align: center; max-width: 500px; margin: auto; }
+.pdf-empty h3 { color: var(--accent); margin-bottom: 1rem; font-size: 1.4rem; }
+.pdf-empty p { margin-bottom: 1rem; line-height: 1.5; }
+.pdf-empty-btn { background: var(--accent); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer; font-family: inherit; font-size: 1rem; margin-top: 0.5rem; transition: all 0.15s; }
+.pdf-empty-btn:hover { background: #d97706; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245,158,11,0.4); }
+.pdf-load-icon { font-size: 4rem; margin-bottom: 1rem; opacity: 0.7; }
+.spinner { display: inline-block; width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.2); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ===== FICHE BILAN ===== */
+.fb-tabs-container { background: var(--card); border-radius: 10px 10px 0 0; padding: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); position: sticky; top: 80px; z-index: 50; border: 1px solid var(--border); margin-bottom: 0; }
+.fb-tabs { display: flex; gap: 0; overflow-x: auto; }
+.fb-tab { flex-shrink: 0; padding: 0.7rem 1rem; background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; font-family: inherit; font-size: 0.85rem; font-weight: 600; color: var(--text-light); display: flex; align-items: center; gap: 0.4rem; white-space: nowrap; }
+.fb-tab:hover { background: var(--bg); color: var(--primary); }
+.fb-tab.active { color: var(--primary); border-bottom-color: var(--primary); background: #fef2f2; }
+.fb-pane { display: none; background: var(--card); padding: 1rem 1.25rem; border-radius: 0 0 10px 10px; border: 1px solid var(--border); border-top: none; margin-bottom: 1rem; }
+.fb-pane.active { display: block; }
+body.fb-print-mode .fb-pane { display: block !important; margin-bottom: 0.5rem; border-radius: 8px; border: 1px solid var(--border); }
+body.fb-print-mode .fb-tabs-container { display: none; }
+.fb-pane-header { background: var(--secondary); color: white; padding: 0.6rem 0.9rem; border-radius: 6px; margin: -1rem -1.25rem 0.85rem; font-weight: 700; font-size: 0.95rem; }
+.fb-pane-header.intervention { background: #1e3a8a; }
+.fb-pane-header.victime { background: #7c3aed; }
+.fb-pane-header.regard1 { background: #f59e0b; color: #1e293b; }
+.fb-pane-header.regard2 { background: #2563eb; }
+.fb-pane-header.regard3 { background: #dc2626; }
+.fb-pane-header.regard4 { background: #10b981; }
+.fb-pane-header.transmission { background: #475569; }
+.fb-grid { display: grid; gap: 0.5rem 0.75rem; }
+.fb-grid.cols-2 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.fb-grid.cols-3 { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+.fb-grid.cols-4 { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
+.fb-field { display: flex; flex-direction: column; gap: 0.15rem; margin-bottom: 0.4rem; }
+.fb-field label { font-size: 0.78rem; font-weight: 600; color: var(--text-light); }
+.fb-field input[type="text"], .fb-field input[type="date"], .fb-field input[type="time"], .fb-field input[type="number"], .fb-field textarea, .fb-field select { padding: 0.4rem 0.55rem; border: 1px solid var(--border); border-radius: 5px; font-size: 0.9rem; font-family: inherit; background: white; }
+.fb-field input:focus, .fb-field textarea:focus, .fb-field select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px rgba(196,30,58,0.15); }
+.fb-field textarea { resize: vertical; min-height: 50px; }
+.fb-inline { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.3rem 0.5rem; border-radius: 5px; background: var(--bg); margin-bottom: 0.3rem; font-size: 0.88rem; }
+.fb-inline-label { flex: 1; min-width: 0; }
+.fb-checkboxes { display: flex; flex-wrap: wrap; gap: 0.25rem 0.5rem; padding: 0.2rem 0; }
+.fb-check { display: inline-flex; align-items: center; gap: 0.3rem; cursor: pointer; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.85rem; background: white; border: 1px solid var(--border); }
+.fb-check:hover { background: var(--bg); border-color: var(--primary); }
+.fb-check input[type="checkbox"] { width: 15px; height: 15px; cursor: pointer; accent-color: var(--primary); margin: 0; }
+.fb-radio-group { display: inline-flex; gap: 0.25rem; flex-wrap: wrap; }
+.fb-radio-group label { display: inline-flex; align-items: center; cursor: pointer; padding: 0.2rem 0.55rem; border: 1px solid var(--border); border-radius: 4px; font-size: 0.82rem; font-weight: 600; background: white; user-select: none; }
+.fb-radio-group label:hover { border-color: var(--primary); }
+.fb-radio-group input[type="radio"] { display: none; }
+.fb-radio-group label:has(input[type="radio"]:checked) { background: var(--primary); border-color: var(--primary); color: white; }
+.fb-block { background: var(--bg); padding: 0.7rem 0.85rem; border-radius: 6px; margin: 0.5rem 0; border-left: 3px solid var(--secondary); }
+.fb-block h4 { font-size: 0.88rem; color: var(--secondary); margin-bottom: 0.5rem; font-weight: 700; }
+.fb-block.resp { border-left-color: #fb923c; } .fb-block.resp h4 { color: #c2410c; }
+.fb-block.circ { border-left-color: #ec4899; } .fb-block.circ h4 { color: #be185d; }
+.fb-block.neuro { border-left-color: #8b5cf6; } .fb-block.neuro h4 { color: #6d28d9; }
+.fb-detresse { background: #fef2f2; border: 2px solid var(--danger); padding: 0.6rem 0.8rem; border-radius: 6px; margin-top: 0.5rem; }
+.fb-detresse h5 { color: var(--danger); margin-bottom: 0.4rem; font-weight: 700; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; }
+.fb-hint { font-size: 0.72rem; color: var(--text-light); margin-top: 0.1rem; font-style: italic; }
+.fb-actions { background: linear-gradient(135deg, #1e3a8a, #1e293b); padding: 1rem; border-radius: 10px; margin: 0 0 1rem 0; display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+.fb-btn { padding: 0.55rem 0.95rem; border: none; border-radius: 6px; font-size: 0.88rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; font-family: inherit; }
+.fb-btn-primary { background: var(--accent); color: white; }
+.fb-btn-secondary { background: white; color: var(--secondary); }
+.fb-btn-danger { background: var(--danger); color: white; }
+.fb-save-status { text-align: center; padding: 0.4rem; font-size: 0.78rem; color: var(--success); font-weight: 600; }
+.fb-save-status.hidden { display: none; }
+.fb-progress { display: flex; gap: 0.3rem; padding: 0.5rem 1rem; background: var(--bg); border-radius: 6px; margin-bottom: 0.75rem; flex-wrap: wrap; align-items: center; }
+.fb-progress-label { font-size: 0.78rem; color: var(--text-light); font-weight: 600; }
+.fb-progress-pill { font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 10px; background: white; border: 1px solid var(--border); color: var(--text-light); cursor: pointer; }
+.fb-progress-pill.filled { background: var(--success); color: white; border-color: var(--success); }
+
+@media print {
+  header, .sidebar, .mobile-toggle, .emergency-banner, .fb-actions, .fb-tabs-container, .fb-progress, .fb-save-status, .pdf-help, .pdf-modal, footer { display: none !important; }
+  .container { grid-template-columns: 1fr; padding: 0; max-width: 100%; }
+  .section { display: none !important; }
+  .section.active { display: block !important; }
+  .fb-pane { display: block !important; page-break-inside: avoid; }
+  body { background: white; }
+}
+
+
+/* ==================== MOBILE OPTIMIZATIONS ==================== */
+html { -webkit-text-size-adjust: 100%; }
+body { overscroll-behavior-y: contain; -webkit-tap-highlight-color: transparent; }
+* { -webkit-tap-highlight-color: transparent; }
+
+/* Safe-area pour iPhone X+ */
+header {
+  padding-top: calc(1rem + env(safe-area-inset-top));
+  padding-left: calc(1.5rem + env(safe-area-inset-left));
+  padding-right: calc(1.5rem + env(safe-area-inset-right));
+}
+.emergency-banner {
+  padding-left: calc(1.5rem + env(safe-area-inset-left));
+  padding-right: calc(1.5rem + env(safe-area-inset-right));
+}
+
+/* Boutons ? plus accessibles au tactile (zone élargie sans agrandir le visuel) */
+.pdf-help { position: relative; }
+.pdf-help::after {
+  content: ""; position: absolute; inset: -12px; /* zone tactile 48px+ */
+}
+
+/* Bouton Installer PWA (header) */
+.install-btn {
+  display: none;
+  background: white; color: var(--primary);
+  border: none; padding: 0.55rem 0.85rem;
+  border-radius: 6px; font-weight: 700; cursor: pointer;
+  font-size: 0.85rem; font-family: inherit;
+  align-items: center; gap: 0.35rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+.install-btn.visible { display: inline-flex; }
+
+/* Indicateur statut PDF / offline */
+.app-status {
+  position: fixed; bottom: calc(0.5rem + env(safe-area-inset-bottom));
+  left: 50%; transform: translateX(-50%);
+  background: #1e293b; color: white;
+  padding: 0.5rem 1rem; border-radius: 24px;
+  font-size: 0.82rem; font-weight: 600;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  z-index: 400; opacity: 0; pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  max-width: 90vw; text-align: center;
+}
+.app-status.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ---------- Phones (≤900px) ---------- */
+@media (max-width: 900px) {
+  header { padding: 0.6rem 0.85rem; padding-top: calc(0.6rem + env(safe-area-inset-top)); }
+  .header-content { gap: 0.5rem; flex-wrap: nowrap; }
+  .logo { font-size: 1rem; gap: 0.5rem; flex: 1; min-width: 0; }
+  .logo-icon { width: 36px; height: 36px; font-size: 1.25rem; }
+  .logo > div > div:first-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .subtitle { display: none; }
+  .mobile-toggle {
+    min-width: 44px; min-height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0.4rem 0.65rem; font-size: 1.1rem;
+  }
+  /* La recherche devient un overlay déclenché par un bouton */
+  .search-box {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: var(--primary); padding: 0.6rem 0.85rem;
+    padding-top: calc(0.6rem + env(safe-area-inset-top));
+    max-width: 100%; z-index: 110;
+    transform: translateY(-110%); transition: transform 0.25s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    display: flex; gap: 0.5rem; align-items: center;
+    order: initial; flex-basis: auto;
+  }
+  .search-box.open { transform: translateY(0); }
+  .search-box input { font-size: 16px; padding: 0.7rem 1rem 0.7rem 2.6rem; }
+  .search-close {
+    background: rgba(255,255,255,0.2); color: white;
+    border: none; border-radius: 6px;
+    min-width: 44px; min-height: 44px;
+    font-size: 1.2rem; font-weight: 700; cursor: pointer;
+  }
+  .search-toggle {
+    background: rgba(255,255,255,0.15); color: white;
+    border: none; min-width: 44px; min-height: 44px;
+    border-radius: 8px; font-size: 1.15rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .sidebar {
+    width: 84vw; max-width: 320px;
+    padding-top: calc(1rem + env(safe-area-inset-top));
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+  }
+  .nav-list button { padding: 0.85rem 0.85rem; font-size: 0.95rem; min-height: 44px; }
+  .container { padding: 0.85rem; gap: 0.85rem; }
+  .section-header { padding: 1rem 1rem; }
+  .section-header h1 { font-size: 1.25rem; }
+  .card { padding: 1rem; }
+  .card h2 { font-size: 1.1rem; }
+  .hero { padding: 1.5rem 1.1rem; }
+  .hero h1 { font-size: 1.3rem; }
+  .hero p { font-size: 0.95rem; }
+  .quick-cards { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  .quick-card { padding: 0.85rem; min-height: 44px; }
+  .quick-card-icon { font-size: 1.5rem; }
+  .quick-card h3 { font-size: 0.95rem; }
+  .quick-card p { font-size: 0.78rem; }
+
+  /* PDF viewer mobile */
+  .pdf-modal { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
+  .pdf-toolbar {
+    padding: 0.5rem 0.6rem; gap: 0.35rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "title title close" "nav nav nav";
+    align-items: center;
+  }
+  .pdf-toolbar-title {
+    grid-area: title; font-size: 0.85rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  #pdf-close { grid-area: close; min-width: 44px; min-height: 44px; padding: 0.4rem 0.6rem; }
+  .pdf-nav-group {
+    grid-area: nav;
+    display: flex; align-items: center;
+    gap: 0.3rem; justify-content: space-between;
+    overflow-x: auto; padding-bottom: 0.2rem;
+  }
+  .pdf-toolbar button {
+    min-height: 40px; min-width: 40px;
+    padding: 0.4rem 0.6rem; font-size: 0.9rem; flex-shrink: 0;
+  }
+  .pdf-toolbar input {
+    min-height: 40px; width: 56px; font-size: 16px;
+  }
+  .pdf-page-info { font-size: 0.8rem; }
+  .pdf-canvas-wrapper { padding: 0.5rem; touch-action: pan-x pan-y pinch-zoom; }
+  .pdf-canvas-wrapper canvas { transform-origin: 0 0; }
+  .pdf-empty { padding: 2rem 1rem; }
+  .pdf-empty h3 { font-size: 1.15rem; }
+  .pdf-empty p { font-size: 0.9rem; }
+
+  /* Fiche bilan mobile */
+  .fb-tabs-container { top: 56px; }
+  .fb-tab { padding: 0.65rem 0.75rem; font-size: 0.8rem; min-height: 44px; }
+  .fb-actions { padding: 0.75rem; gap: 0.4rem; }
+  .fb-btn { padding: 0.65rem 0.85rem; font-size: 0.85rem; min-height: 44px; flex: 1 1 auto; justify-content: center; }
+  .fb-field input, .fb-field textarea, .fb-field select {
+    font-size: 16px; /* évite le zoom iOS */ padding: 0.55rem 0.65rem;
+    min-height: 44px;
+  }
+  .fb-check { min-height: 36px; padding: 0.35rem 0.6rem; }
+  .fb-check input[type="checkbox"] { width: 18px; height: 18px; }
+  .fb-radio-group label { min-height: 36px; padding: 0.35rem 0.7rem; }
+
+  /* Tables -> cards on narrow screens */
+  .table-wrapper { -webkit-overflow-scrolling: touch; }
+
+  footer { padding-bottom: calc(1.5rem + env(safe-area-inset-bottom)); }
+
+  /* Hide hover effects that don't apply to touch */
+  .quick-card:hover { transform: none; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border-color: transparent; }
+  .nav-list button:hover { background: transparent; color: var(--text); }
+  .nav-list button:active { background: var(--bg); color: var(--primary); }
+  .pdf-help:hover { transform: none; box-shadow: none; background: var(--secondary); }
+  .pdf-help:active { transform: scale(0.9); background: var(--primary); }
+}
+
+/* ---------- Small phones (≤380px) ---------- */
+@media (max-width: 380px) {
+  .logo > div > div:first-child { font-size: 0.95rem; }
+  .emergency-banner { font-size: 0.8rem; padding: 0.5rem 0.6rem; }
+  .quick-cards { grid-template-columns: 1fr; }
+}
+
+/* ---------- Landscape phone ---------- */
+@media (max-height: 480px) and (orientation: landscape) {
+  header { padding: 0.4rem 0.85rem; }
+  .pdf-toolbar { padding: 0.35rem 0.5rem; }
+}
+
+/* Touch-only: désactive le hover global */
+@media (hover: none) {
+  .quick-card:hover { transform: none; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+  .nav-list button:hover { background: transparent; color: var(--text); }
+}
+
+/* Empêche le double-tap zoom sur les boutons */
+button, .nav-list button, .fb-tab, .pdf-toolbar button, .fb-btn, .quick-card {
+  touch-action: manipulation;
+}
+
+</style>
+</head>
+<body>
+<header>
+  <div class="header-content">
+    <button class="mobile-toggle" id="menuToggle" aria-label="Ouvrir le menu">☰</button>
+    <div class="logo">
+      <div class="logo-icon">+</div>
+      <div>
+        <div>CETC – Groupe d'Intervention</div>
+        <div class="subtitle">Guide PSE1 – Premiers Secours en Équipe</div>
+      </div>
+    </div>
+    <button class="search-toggle" id="searchToggle" aria-label="Rechercher" title="Rechercher">🔍</button>
+    <button class="install-btn" id="installBtn" aria-label="Installer l'application" title="Installer">📲 <span>Installer</span></button>
+    <div class="search-box" id="searchBox">
+      <input type="text" id="searchInput" placeholder="Rechercher..." inputmode="search" autocomplete="off">
+      <button class="search-close" id="searchClose" aria-label="Fermer la recherche">✕</button>
+    </div>
+  </div>
+</header>
+<div class="emergency-banner">
+  <strong>🚨 SAMU 15</strong> &nbsp;|&nbsp; <strong>Pompiers 18</strong> &nbsp;|&nbsp; <strong>112</strong> &nbsp;|&nbsp; <strong>SMS 114</strong>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<!-- ===== PDF MODAL VIEWER ===== -->
+<div class="pdf-modal" id="pdf-modal">
+  <div class="pdf-toolbar">
+    <span class="pdf-toolbar-title">📖 Référentiel PSE 2024</span>
+    <div class="pdf-nav-group">
+      <button id="pdf-prev" title="Page précédente" aria-label="Page précédente">◀</button>
+      <input type="number" id="pdf-goto" min="1" value="1" inputmode="numeric" aria-label="Numéro de page">
+      <span class="pdf-page-info" id="pdf-page-info">/ –</span>
+      <button id="pdf-next" title="Page suivante" aria-label="Page suivante">▶</button>
+      <button id="pdf-zoom-out" title="Réduire" aria-label="Réduire">−</button>
+      <button id="pdf-zoom-in" title="Agrandir" aria-label="Agrandir">+</button>
+      <button id="pdf-fit" title="Ajuster" aria-label="Ajuster">⤢</button>
+      <button id="pdf-replace" title="Recharger un autre PDF" aria-label="Remplacer">📂</button>
+    </div>
+    <button id="pdf-close" class="danger" title="Fermer" aria-label="Fermer">✕</button>
+  </div>
+  <div class="pdf-canvas-wrapper" id="pdf-canvas-wrapper">
+    <div class="pdf-empty" id="pdf-empty">
+      <div class="pdf-load-icon">📄</div>
+      <h3>Charger le PDF officiel PSE 2024</h3>
+      <p>Pour activer la consultation contextuelle des références au référentiel, sélectionnez le fichier <strong>pse2024_public.pdf</strong>.</p>
+      <p style="font-size:0.85rem; opacity:0.8;">Le PDF sera enregistré dans votre navigateur. Vous n'aurez à le faire qu'<strong>une seule fois</strong>. Les clics suivants ouvriront directement la page demandée.</p>
+      <input type="file" id="pdf-file-input" accept="application/pdf" style="display:none;">
+      <button class="pdf-empty-btn" id="pdf-load-btn">📂 Sélectionner le PDF</button>
+    </div>
+    <div class="pdf-loading" id="pdf-loading" style="display:none;">
+      <div class="spinner"></div>
+      <p style="margin-top:1rem;" id="pdf-loading-text">Chargement…</p>
+    </div>
+    <canvas id="pdf-canvas" style="display:none;"></canvas>
+  </div>
+</div>
+
+<div class="container">
+  <aside class="sidebar" id="sidebar">
+    <h3>Outil terrain</h3>
+    <ul class="nav-list">
+      <li><button data-target="fiche-bilan" class="special"><span class="nav-icon">📝</span>Fiche Bilan</button></li>
+    </ul>
+    <h3>Démarche</h3>
+    <ul class="nav-list">
+      <li><button data-target="accueil" class="active"><span class="nav-icon">🏠</span>Accueil</button></li>
+      <li><button data-target="protection"><span class="nav-icon">🛡️</span>Protection & Sécurité</button></li>
+      <li><button data-target="bilan"><span class="nav-icon">📋</span>Réalisation des bilans</button></li>
+      <li><button data-target="alerte"><span class="nav-icon">📞</span>Alerte & Transmission</button></li>
+    </ul>
+    <h3>Urgences vitales</h3>
+    <ul class="nav-list">
+      <li><button data-target="hemorragie"><span class="nav-icon">🩸</span>Hémorragies</button></li>
+      <li><button data-target="ova"><span class="nav-icon">🫁</span>Obstruction des VA</button></li>
+      <li><button data-target="inconscience"><span class="nav-icon">😵</span>Perte de connaissance</button></li>
+      <li><button data-target="arret"><span class="nav-icon">❤️</span>Arrêt cardiaque & RCP</button></li>
+      <li><button data-target="dae"><span class="nav-icon">⚡</span>Défibrillateur (DAE)</button></li>
+    </ul>
+    <h3>Détresses</h3>
+    <ul class="nav-list">
+      <li><button data-target="resp"><span class="nav-icon">💨</span>Détresse respiratoire</button></li>
+      <li><button data-target="circ"><span class="nav-icon">💗</span>Détresse circulatoire</button></li>
+      <li><button data-target="neuro"><span class="nav-icon">🧠</span>Détresse neurologique</button></li>
+    </ul>
+    <h3>Atteintes & Traumatismes</h3>
+    <ul class="nav-list">
+      <li><button data-target="malaise"><span class="nav-icon">🤒</span>Malaises</button></li>
+      <li><button data-target="brulures"><span class="nav-icon">🔥</span>Brûlures</button></li>
+      <li><button data-target="plaies"><span class="nav-icon">🩹</span>Plaies</button></li>
+      <li><button data-target="trauma"><span class="nav-icon">🦴</span>Traumatismes</button></li>
+      <li><button data-target="noyade"><span class="nav-icon">🌊</span>Noyade</button></li>
+    </ul>
+    <h3>Aide-mémoire</h3>
+    <ul class="nav-list">
+      <li><button data-target="constantes"><span class="nav-icon">📊</span>Constantes normales</button></li>
+      <li><button data-target="hygiene"><span class="nav-icon">🧤</span>Hygiène & Asepsie</button></li>
+    </ul>
+  </aside>
+  <main class="main">
+
+    <section id="accueil" class="section active">
+      <div class="hero">
+        <h1>Guide d'intervention CETC – PSE1</h1>
+        <p>Application de référence pour le groupe d'intervention. Conduites à tenir, procédures et fiches techniques conformes au référentiel PSE1 (édition 2024).</p>
+      </div>
+      <div class="pdf-info">
+        <span style="font-size:1.1rem;">📖</span>
+        <div>Cliquez sur les boutons <button class="pdf-help small" disabled style="cursor:default;">?</button> pour ouvrir le <strong>référentiel officiel PSE 2024</strong> directement à la page concernée. Au premier clic, vous serez invité à charger le fichier PDF (une seule fois).</div>
+      </div>
+      <div class="quick-cards">
+        <button class="quick-card highlight" data-target="fiche-bilan"><div class="quick-card-icon">📝</div><h3>Fiche Bilan</h3><p>Renseigner les données de la victime, exporter le bilan</p></button>
+        <button class="quick-card" data-target="hemorragie"><div class="quick-card-icon">🩸</div><h3>Hémorragie</h3><p>Compression, garrot</p></button>
+        <button class="quick-card" data-target="arret"><div class="quick-card-icon">❤️</div><h3>Arrêt cardiaque</h3><p>RCP adulte, enfant, nourrisson</p></button>
+        <button class="quick-card" data-target="inconscience"><div class="quick-card-icon">😵</div><h3>Inconscience</h3><p>PLS, LVA</p></button>
+      </div>
+      <div class="card">
+        <h2><span>📚 Comment utiliser ce guide</span></h2>
+        <ol>
+          <li><strong>Protection</strong> : assurez la sécurité avant tout.</li>
+          <li><strong>Bilan</strong> : 1<sup>er</sup>, 2<sup>e</sup>, 3<sup>e</sup> et 4<sup>e</sup> regards.</li>
+          <li><strong>Alerte</strong> : transmettez un bilan structuré.</li>
+          <li><strong>Action</strong> : appliquez la conduite à tenir adaptée.</li>
+          <li><strong>Surveillance</strong> : continue jusqu'à la prise en charge.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== FICHE BILAN ===== -->
+    <section id="fiche-bilan" class="section">
+      <div class="section-header"><h1>📝 Fiche Bilan d'intervention</h1><p>Saisie compacte par onglets. Sauvegarde automatique. Export possible.</p></div>
+      <div class="fb-actions">
+        <button class="fb-btn fb-btn-primary" id="fb-print"><span>🖨️</span>Imprimer / PDF</button>
+        <button class="fb-btn fb-btn-secondary" id="fb-export-text"><span>📄</span>Export texte</button>
+        <button class="fb-btn fb-btn-secondary" id="fb-export-json"><span>💾</span>Sauver (JSON)</button>
+        <button class="fb-btn fb-btn-secondary" id="fb-import-json"><span>📂</span>Charger (JSON)</button>
+        <button class="fb-btn fb-btn-secondary" id="fb-show-all"><span>📋</span>Tout afficher</button>
+        <button class="fb-btn fb-btn-danger" id="fb-reset"><span>🗑️</span>Réinitialiser</button>
+        <input type="file" id="fb-import-file" accept=".json" style="display:none;">
+      </div>
+      <div class="fb-save-status hidden" id="fb-save-indicator">✓ Sauvegardé</div>
+      <div class="fb-progress" id="fb-progress"><span class="fb-progress-label">Avancement :</span></div>
+      <div class="fb-tabs-container">
+        <div class="fb-tabs" id="fb-tabs">
+          <button class="fb-tab active" data-tab="t-intervention">📍 Intervention</button>
+          <button class="fb-tab" data-tab="t-victime">👤 Victime</button>
+          <button class="fb-tab" data-tab="t-r1">👁️ 1er R.</button>
+          <button class="fb-tab" data-tab="t-r2">🔍 2e R.</button>
+          <button class="fb-tab" data-tab="t-r3">🩺 3e R.</button>
+          <button class="fb-tab" data-tab="t-r4">📊 4e R.</button>
+          <button class="fb-tab" data-tab="t-transmission">📞 Transmission</button>
+        </div>
+      </div>
+      <form id="fb-form">
+        <div class="fb-pane active" id="t-intervention">
+          <div class="fb-pane-header intervention">📍 INTERVENTION</div>
+          <div class="fb-grid cols-3">
+            <div class="fb-field"><label>Date</label><input type="date" name="date"></div>
+            <div class="fb-field"><label>Heure prise en charge</label><input type="time" name="heure_prise_charge"></div>
+            <div class="fb-field"><label>Heure accident présumée</label><input type="time" name="heure_accident"></div>
+          </div>
+          <div class="fb-grid cols-2">
+            <div class="fb-field"><label>Poste de secours / Piscine</label><input type="text" name="poste_secours"></div>
+            <div class="fb-field"><label>Téléphone du poste</label><input type="text" name="tel_poste"></div>
+          </div>
+          <div class="fb-field"><label>Lieu d'intervention</label>
+            <div class="fb-checkboxes">
+              <label class="fb-check"><input type="checkbox" name="lieu_domicile">Domicile</label>
+              <label class="fb-check"><input type="checkbox" name="lieu_travail">Travail</label>
+              <label class="fb-check"><input type="checkbox" name="lieu_public">Lieu public</label>
+              <label class="fb-check"><input type="checkbox" name="lieu_voie">Voie publique</label>
+              <label class="fb-check"><input type="checkbox" name="lieu_route">Accident route</label>
+              <label class="fb-check"><input type="checkbox" name="lieu_sport">Sport</label>
+              <label class="fb-check"><input type="checkbox" name="lieu_vestiaire">Vestiaire</label>
+            </div>
+          </div>
+          <div class="fb-field"><label>Autres précisions</label><input type="text" name="lieu_autres"></div>
+          <div class="fb-grid cols-3">
+            <div class="fb-field"><label>Adresse</label><input type="text" name="adresse_intervention"></div>
+            <div class="fb-field"><label>Code postal</label><input type="text" name="cp_intervention"></div>
+            <div class="fb-field"><label>Ville</label><input type="text" name="ville_intervention"></div>
+          </div>
+        </div>
+        <div class="fb-pane" id="t-victime">
+          <div class="fb-pane-header victime">👤 VICTIME</div>
+          <div class="fb-grid cols-2">
+            <div class="fb-field"><label>Nom</label><input type="text" name="v_nom"></div>
+            <div class="fb-field"><label>Prénom</label><input type="text" name="v_prenom"></div>
+          </div>
+          <div class="fb-grid cols-3">
+            <div class="fb-field"><label>Genre</label>
+              <div class="fb-radio-group">
+                <label><input type="radio" name="v_genre" value="H">H</label>
+                <label><input type="radio" name="v_genre" value="F">F</label>
+                <label><input type="radio" name="v_genre" value="autre">Autre</label>
+              </div>
+            </div>
+            <div class="fb-field"><label>Âge</label><input type="number" name="v_age" min="0" max="120"></div>
+            <div class="fb-field"><label>Poids estimé (kg)</label><input type="number" name="v_poids" min="0"></div>
+          </div>
+          <div class="fb-field"><label>Adresse</label><input type="text" name="v_adresse"></div>
+          <div class="fb-grid cols-2">
+            <div class="fb-field"><label>Code postal</label><input type="text" name="v_cp"></div>
+            <div class="fb-field"><label>Ville</label><input type="text" name="v_ville"></div>
+          </div>
+          <div class="fb-grid cols-2">
+            <div class="fb-field"><label>Personne à prévenir</label><input type="text" name="v_personne_prevenir"></div>
+            <div class="fb-field"><label>Téléphone</label><input type="text" name="v_tel"></div>
+          </div>
+          <div class="fb-grid cols-2">
+            <div class="fb-field"><label>Personne prévenue ?</label>
+              <div class="fb-radio-group">
+                <label><input type="radio" name="v_prevenue" value="oui">OUI</label>
+                <label><input type="radio" name="v_prevenue" value="non">NON</label>
+              </div>
+            </div>
+            <div class="fb-field"><label>Médecin traitant</label><input type="text" name="v_medecin"></div>
+          </div>
+        </div>
+        <div class="fb-pane" id="t-r1">
+          <div class="fb-pane-header regard1">👁️ 1<sup>er</sup> REGARD – OBSERVER</div>
+          <div class="fb-field"><label>Nature de l'intervention</label><input type="text" name="r1_nature"></div>
+          <div class="fb-inline"><span class="fb-inline-label">Danger ?</span>
+            <div class="fb-radio-group"><label><input type="radio" name="r1_danger" value="non">NON</label><label><input type="radio" name="r1_danger" value="oui">OUI</label></div>
+          </div>
+          <div class="fb-field"><label>Si oui, lequel ?</label><input type="text" name="r1_danger_lequel"></div>
+          <div class="fb-grid cols-2">
+            <div class="fb-field"><label>Nombre de victimes</label><input type="number" name="r1_nb_victimes" min="1" value="1"></div>
+            <div class="fb-field"><label>Renforts demandés ?</label>
+              <div class="fb-radio-group"><label><input type="radio" name="r1_renforts" value="non">NON</label><label><input type="radio" name="r1_renforts" value="oui">OUI</label></div>
+            </div>
+          </div>
+          <div class="fb-field"><label>Si oui, lesquels ?</label><input type="text" name="r1_renforts_lesquels"></div>
+          <div class="fb-field"><label>Compléments d'information</label><textarea name="r1_complement"></textarea></div>
+        </div>
+        <div class="fb-pane" id="t-r2">
+          <div class="fb-pane-header regard2">🔍 2<sup>e</sup> REGARD – RECHERCHER</div>
+          <div class="fb-field"><label>Plainte principale</label><textarea name="r2_plainte"></textarea></div>
+          <div class="fb-block"><h4>Position de la victime</h4>
+            <div class="fb-checkboxes">
+              <label class="fb-check"><input type="checkbox" name="r2_pos_assise">Assise</label>
+              <label class="fb-check"><input type="checkbox" name="r2_pos_debout">Debout</label>
+              <label class="fb-check"><input type="checkbox" name="r2_pos_dos">Dos</label>
+              <label class="fb-check"><input type="checkbox" name="r2_pos_ventre">Ventre</label>
+              <label class="fb-check"><input type="checkbox" name="r2_pos_cote">Côté</label>
+              <label class="fb-check"><input type="checkbox" name="r2_pos_recroq">Recroquevillée</label>
+            </div>
+            <div class="fb-inline" style="margin-top:0.4rem;"><span class="fb-inline-label">Stabilisation du rachis ?</span>
+              <div class="fb-radio-group"><label><input type="radio" name="r2_rachis" value="oui">OUI</label><label><input type="radio" name="r2_rachis" value="non">NON</label></div>
+            </div>
+          </div>
+          <div class="fb-block"><h4>⚠️ Menaces vitales</h4>
+            <div class="fb-inline"><span class="fb-inline-label">Obstruction VA</span><div class="fb-radio-group"><label><input type="radio" name="r2_ova" value="oui">OUI</label><label><input type="radio" name="r2_ova" value="non">NON</label></div></div>
+            <div class="fb-inline"><span class="fb-inline-label">Hémorragie externe grave</span><div class="fb-radio-group"><label><input type="radio" name="r2_hemorragie" value="oui">OUI</label><label><input type="radio" name="r2_hemorragie" value="non">NON</label></div></div>
+            <div class="fb-inline"><span class="fb-inline-label">L.V.A. menacée</span><div class="fb-radio-group"><label><input type="radio" name="r2_lva_menacee" value="oui">OUI</label><label><input type="radio" name="r2_lva_menacee" value="non">NON</label></div></div>
+            <div class="fb-inline"><span class="fb-inline-label">Respiration absente / anormale</span><div class="fb-radio-group"><label><input type="radio" name="r2_resp_anormale" value="oui">OUI</label><label><input type="radio" name="r2_resp_anormale" value="non">NON</label></div></div>
+          </div>
+          <div class="fb-block"><h4>Actions entreprises</h4>
+            <div class="fb-checkboxes">
+              <label class="fb-check"><input type="checkbox" name="r2_act_desob">Désobstruction VA</label>
+              <label class="fb-check"><input type="checkbox" name="r2_act_compdir">Compression directe</label>
+              <label class="fb-check"><input type="checkbox" name="r2_act_pansc">Pansement compressif</label>
+              <label class="fb-check"><input type="checkbox" name="r2_act_garrot">Garrot</label>
+              <label class="fb-check"><input type="checkbox" name="r2_act_gaze">Gaze hémostatique</label>
+              <label class="fb-check"><input type="checkbox" name="r2_act_lva">L.V.A.</label>
+              <label class="fb-check"><input type="checkbox" name="r2_act_retour">Retournement</label>
+              <label class="fb-check"><input type="checkbox" name="r2_act_casque">Retrait casque</label>
+              <label class="fb-check"><input type="checkbox" name="r2_act_rcp">R.C.P.</label>
+              <label class="fb-check"><input type="checkbox" name="r2_act_dae">Pose DAE</label>
+            </div>
+            <div class="fb-grid cols-3" style="margin-top:0.5rem;">
+              <div class="fb-field"><label>H. garrot</label><input type="time" name="r2_h_garrot"></div>
+              <div class="fb-field"><label>H. gaze</label><input type="time" name="r2_h_gaze"></div>
+              <div class="fb-field"><label>H. début RCP</label><input type="time" name="r2_h_rcp"></div>
+              <div class="fb-field"><label>H. pose DAE</label><input type="time" name="r2_h_dae"></div>
+              <div class="fb-field"><label>Nb chocs</label><input type="number" name="r2_nb_chocs" min="0"></div>
+              <div class="fb-field"><label>H. reprise activité</label><input type="time" name="r2_h_reprise"></div>
+            </div>
+            <div class="fb-field"><label>Ventilation BAVU (mvts/min)</label><input type="number" name="r2_bavu" min="0"></div>
+          </div>
+          <div class="fb-grid cols-2">
+            <div class="fb-field"><label>Avis médical à</label><input type="time" name="r2_avis_medical_h"></div>
+            <div class="fb-field"><label>Médecin régulateur</label><input type="text" name="r2_medecin_reg"></div>
+          </div>
+          <div class="fb-field"><label>Consignes reçues</label><textarea name="r2_consignes"></textarea></div>
+        </div>
+        <div class="fb-pane" id="t-r3">
+          <div class="fb-pane-header regard3">🩺 3<sup>e</sup> REGARD – APPRÉCIER</div>
+          <div class="fb-block resp"><h4>1 – Respiration (15 s)</h4>
+            <div class="fb-inline"><span class="fb-inline-label">Parle facilement</span><div class="fb-radio-group"><label><input type="radio" name="r3_resp_parle" value="oui">OUI</label><label><input type="radio" name="r3_resp_parle" value="non">NON</label></div></div>
+            <div class="fb-inline"><span class="fb-inline-label">Rapide</span><div class="fb-radio-group"><label><input type="radio" name="r3_resp_rapide" value="oui">OUI</label><label><input type="radio" name="r3_resp_rapide" value="non">NON</label></div></div>
+            <div class="fb-inline"><span class="fb-inline-label">Ample</span><div class="fb-radio-group"><label><input type="radio" name="r3_resp_ample" value="oui">OUI</label><label><input type="radio" name="r3_resp_ample" value="non">NON</label></div></div>
+            <div class="fb-inline"><span class="fb-inline-label">Régulière</span><div class="fb-radio-group"><label><input type="radio" name="r3_resp_reg" value="oui">OUI</label><label><input type="radio" name="r3_resp_reg" value="non">NON</label></div></div>
+            <div class="fb-field" style="margin-top:0.4rem;"><label>Qualité</label>
+              <div class="fb-checkboxes">
+                <label class="fb-check"><input type="checkbox" name="r3_resp_silencieuse">Silencieuse</label>
+                <label class="fb-check"><input type="checkbox" name="r3_resp_bruyante">Bruyante</label>
+                <label class="fb-check"><input type="checkbox" name="r3_resp_sifflement">Sifflement</label>
+                <label class="fb-check"><input type="checkbox" name="r3_resp_ronflement">Ronflement</label>
+                <label class="fb-check"><input type="checkbox" name="r3_resp_gargouill">Gargouillement</label>
+              </div>
+            </div>
+            <div class="fb-inline"><span class="fb-inline-label">Pause respiratoire</span><div class="fb-radio-group"><label><input type="radio" name="r3_resp_pause" value="oui">OUI</label><label><input type="radio" name="r3_resp_pause" value="non">NON</label></div></div>
+            <div class="fb-field"><label>Peau</label>
+              <div class="fb-checkboxes">
+                <label class="fb-check"><input type="checkbox" name="r3_peau_coloree">Colorée</label>
+                <label class="fb-check"><input type="checkbox" name="r3_peau_cyanose">Cyanose</label>
+                <label class="fb-check"><input type="checkbox" name="r3_peau_seche">Sèche</label>
+                <label class="fb-check"><input type="checkbox" name="r3_peau_humide">Humide</label>
+                <label class="fb-check"><input type="checkbox" name="r3_peau_sueurs">Sueurs</label>
+              </div>
+            </div>
+            <div class="fb-inline"><span class="fb-inline-label">Muqueuses rosées</span><div class="fb-radio-group"><label><input type="radio" name="r3_muqueuses" value="oui">OUI</label><label><input type="radio" name="r3_muqueuses" value="non">NON</label></div></div>
+            <div class="fb-detresse"><h5>⚠️ Détresse ventilatoire ?<div class="fb-radio-group"><label><input type="radio" name="r3_detresse_vent" value="non">NON</label><label><input type="radio" name="r3_detresse_vent" value="oui">OUI</label></div></h5>
+              <div class="fb-grid cols-2">
+                <div class="fb-field"><label>Position d'attente</label><input type="text" name="r3_dv_position"></div>
+                <div class="fb-field"><label>Avis médical à</label><input type="time" name="r3_dv_avis"></div>
+              </div>
+              <div class="fb-grid cols-3">
+                <div class="fb-field"><label>O₂ ?</label><div class="fb-radio-group"><label><input type="radio" name="r3_dv_o2" value="oui">OUI</label><label><input type="radio" name="r3_dv_o2" value="non">NON</label></div></div>
+                <div class="fb-field"><label>Débit (L/min)</label><input type="number" name="r3_dv_o2_debit" min="0" max="15"></div>
+                <div class="fb-field"><label>Mode</label><select name="r3_dv_mode"><option value="">--</option><option value="MHC">Masque HC</option><option value="Lunettes">Lunettes</option><option value="Insufflation">Insufflation</option></select></div>
+              </div>
+            </div>
+          </div>
+          <div class="fb-block circ"><h4>2 – Circulation (15 s)</h4>
+            <div class="fb-inline"><span class="fb-inline-label">Pouls perceptible</span><div class="fb-radio-group"><label><input type="radio" name="r3_pouls_perc" value="oui">OUI</label><label><input type="radio" name="r3_pouls_perc" value="non">NON</label></div></div>
+            <div class="fb-inline"><span class="fb-inline-label">Rapide</span><div class="fb-radio-group"><label><input type="radio" name="r3_pouls_rapide" value="oui">OUI</label><label><input type="radio" name="r3_pouls_rapide" value="non">NON</label></div></div>
+            <div class="fb-inline"><span class="fb-inline-label">Ample</span><div class="fb-radio-group"><label><input type="radio" name="r3_pouls_ample" value="oui">OUI</label><label><input type="radio" name="r3_pouls_ample" value="non">NON</label></div></div>
+            <div class="fb-inline"><span class="fb-inline-label">Régulier</span><div class="fb-radio-group"><label><input type="radio" name="r3_pouls_reg" value="oui">OUI</label><label><input type="radio" name="r3_pouls_reg" value="non">NON</label></div></div>
+            <div class="fb-field" style="margin-top:0.4rem;"><label>Pris au niveau de</label>
+              <div class="fb-checkboxes">
+                <label class="fb-check"><input type="checkbox" name="r3_pouls_poignet">Poignet</label>
+                <label class="fb-check"><input type="checkbox" name="r3_pouls_cou">Cou</label>
+                <label class="fb-check"><input type="checkbox" name="r3_pouls_aine">Pli aine</label>
+              </div>
+            </div>
+            <div class="fb-inline"><span class="fb-inline-label">Pause circulatoire</span><div class="fb-radio-group"><label><input type="radio" name="r3_circ_pause" value="oui">OUI</label><label><input type="radio" name="r3_circ_pause" value="non">NON</label></div></div>
+            <div class="fb-field"><label>Peau</label>
+              <div class="fb-checkboxes">
+                <label class="fb-check"><input type="checkbox" name="r3_circ_coloree">Colorée</label>
+                <label class="fb-check"><input type="checkbox" name="r3_circ_pale">Pâle</label>
+                <label class="fb-check"><input type="checkbox" name="r3_circ_chaude">Chaude</label>
+                <label class="fb-check"><input type="checkbox" name="r3_circ_seche">Sèche</label>
+                <label class="fb-check"><input type="checkbox" name="r3_circ_humide">Humide</label>
+                <label class="fb-check"><input type="checkbox" name="r3_circ_marbrures">Marbrures</label>
+              </div>
+            </div>
+            <div class="fb-inline"><span class="fb-inline-label">Muqueuses rosées</span><div class="fb-radio-group"><label><input type="radio" name="r3_circ_muqueuses" value="oui">OUI</label><label><input type="radio" name="r3_circ_muqueuses" value="non">NON</label></div></div>
+            <div class="fb-detresse"><h5>⚠️ Détresse circulatoire ?<div class="fb-radio-group"><label><input type="radio" name="r3_detresse_circ" value="non">NON</label><label><input type="radio" name="r3_detresse_circ" value="oui">OUI</label></div></h5>
+              <div class="fb-grid cols-2">
+                <div class="fb-field"><label>Position d'attente</label><input type="text" name="r3_dc_position"></div>
+                <div class="fb-field"><label>Avis médical à</label><input type="time" name="r3_dc_avis"></div>
+              </div>
+              <div class="fb-grid cols-2">
+                <div class="fb-field"><label>O₂ ?</label><div class="fb-radio-group"><label><input type="radio" name="r3_dc_o2" value="oui">OUI</label><label><input type="radio" name="r3_dc_o2" value="non">NON</label></div></div>
+                <div class="fb-field"><label>Débit (L/min)</label><input type="number" name="r3_dc_o2_debit" min="0" max="15"></div>
+              </div>
+            </div>
+          </div>
+          <div class="fb-block neuro"><h4>3 – Neurologique</h4>
+            <div class="fb-grid cols-2">
+              <div class="fb-field"><label>Perte de connaissance ?</label><div class="fb-radio-group"><label><input type="radio" name="r3_pc" value="oui">OUI</label><label><input type="radio" name="r3_pc" value="non">NON</label></div></div>
+              <div class="fb-field"><label>Type</label><div class="fb-radio-group"><label><input type="radio" name="r3_pc_type" value="PCI">PCI</label><label><input type="radio" name="r3_pc_type" value="PCP">PCP</label></div></div>
+            </div>
+            <div class="fb-grid cols-2">
+              <div class="fb-field"><label>Durée PC (min)</label><input type="number" name="r3_pc_duree" min="0"></div>
+              <div class="fb-field"><label>Score EVDA</label><div class="fb-radio-group"><label><input type="radio" name="r3_evda" value="E">E</label><label><input type="radio" name="r3_evda" value="V">V</label><label><input type="radio" name="r3_evda" value="D">D</label><label><input type="radio" name="r3_evda" value="A">A</label></div></div>
+            </div>
+            <div class="fb-field"><label>Orientée</label>
+              <div class="fb-checkboxes">
+                <label class="fb-check"><input type="checkbox" name="r3_orient_temps">Temps</label>
+                <label class="fb-check"><input type="checkbox" name="r3_orient_espace">Espace</label>
+              </div>
+            </div>
+            <div class="fb-inline"><span class="fb-inline-label">Motricité MS</span><div class="fb-radio-group"><label><input type="radio" name="r3_motr_sup" value="oui">OUI</label><label><input type="radio" name="r3_motr_sup" value="non">NON</label></div></div>
+            <div class="fb-inline"><span class="fb-inline-label">Motricité MI</span><div class="fb-radio-group"><label><input type="radio" name="r3_motr_inf" value="oui">OUI</label><label><input type="radio" name="r3_motr_inf" value="non">NON</label></div></div>
+            <div class="fb-inline"><span class="fb-inline-label">Sensibilité MS</span><div class="fb-radio-group"><label><input type="radio" name="r3_sens_sup" value="oui">OUI</label><label><input type="radio" name="r3_sens_sup" value="non">NON</label></div></div>
+            <div class="fb-inline"><span class="fb-inline-label">Sensibilité MI</span><div class="fb-radio-group"><label><input type="radio" name="r3_sens_inf" value="oui">OUI</label><label><input type="radio" name="r3_sens_inf" value="non">NON</label></div></div>
+            <div class="fb-inline"><span class="fb-inline-label">Pupilles égales</span><div class="fb-radio-group"><label><input type="radio" name="r3_pup_egales" value="oui">OUI</label><label><input type="radio" name="r3_pup_egales" value="non">NON</label></div></div>
+            <div class="fb-inline"><span class="fb-inline-label">Pupilles réactives à la lumière</span><div class="fb-radio-group"><label><input type="radio" name="r3_pup_reactives" value="oui">OUI</label><label><input type="radio" name="r3_pup_reactives" value="non">NON</label></div></div>
+            <div class="fb-detresse"><h5>⚠️ Détresse neurologique ?<div class="fb-radio-group"><label><input type="radio" name="r3_detresse_neuro" value="non">NON</label><label><input type="radio" name="r3_detresse_neuro" value="oui">OUI</label></div></h5>
+              <div class="fb-grid cols-2">
+                <div class="fb-field"><label>Position d'attente</label><input type="text" name="r3_dn_position"></div>
+                <div class="fb-field"><label>Avis médical à</label><input type="time" name="r3_dn_avis"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="fb-pane" id="t-r4">
+          <div class="fb-pane-header regard4">📊 4<sup>e</sup> REGARD – MESURER & INTERROGER</div>
+          <div class="fb-block"><h4>Paramètres physiologiques</h4>
+            <div class="fb-grid cols-4">
+              <div class="fb-field"><label>FR (mvts/min)</label><input type="number" name="r4_fr" min="0" max="80"><div class="fb-hint">Adulte: 12–20</div></div>
+              <div class="fb-field"><label>FC (bpm)</label><input type="number" name="r4_fc" min="0" max="250"><div class="fb-hint">Adulte: 60–100</div></div>
+              <div class="fb-field"><label>SpO₂ (%)</label><input type="number" name="r4_spo2" min="0" max="100"><div class="fb-hint">Normale: 94–100</div></div>
+              <div class="fb-field"><label>PA (mmHg)</label><input type="text" name="r4_pa" placeholder="120/80"><div class="fb-hint">≈ 100/80</div></div>
+              <div class="fb-field"><label>Glycémie (g/L)</label><input type="number" name="r4_glyc" step="0.1" min="0"><div class="fb-hint">Normale: 0,7–1,1</div></div>
+              <div class="fb-field"><label>Temp. (°C)</label><input type="number" name="r4_temp" step="0.1" min="25" max="45"><div class="fb-hint">≈ 37</div></div>
+              <div class="fb-field"><label>TRC (sec)</label><input type="number" name="r4_trc" step="0.5" min="0"><div class="fb-hint">&lt; 2s</div></div>
+              <div class="fb-field"><label>Douleur (0–10)</label><input type="number" name="r4_douleur" min="0" max="10"><div class="fb-hint">Seuil: ≥ 4</div></div>
+            </div>
+          </div>
+          <div class="fb-block"><h4>Plainte – PQRST</h4>
+            <div class="fb-grid cols-2">
+              <div class="fb-field"><label>P – Provoqué par</label><input type="text" name="r4_p"></div>
+              <div class="fb-field"><label>Q – Qualité</label><input type="text" name="r4_q"></div>
+              <div class="fb-field"><label>R – Région / irradiation</label><input type="text" name="r4_r"></div>
+              <div class="fb-field"><label>S – Sévérité</label><input type="text" name="r4_s"></div>
+            </div>
+            <div class="fb-field"><label>T – Temporalité</label><input type="text" name="r4_t"></div>
+          </div>
+          <div class="fb-block"><h4>Antécédents – MHTAF</h4>
+            <div class="fb-grid cols-2">
+              <div class="fb-field"><label>M – Maladies</label><input type="text" name="r4_m"></div>
+              <div class="fb-field"><label>H – Hospitalisations</label><input type="text" name="r4_h"></div>
+              <div class="fb-field"><label>T – Traitements</label><input type="text" name="r4_t_trait"></div>
+              <div class="fb-field"><label>A – Allergies</label><input type="text" name="r4_a"></div>
+            </div>
+            <div class="fb-field"><label>F – Facteurs de risque</label><input type="text" name="r4_f"></div>
+          </div>
+          <div class="fb-block"><h4>Examen complémentaire</h4>
+            <div class="fb-field"><label>Lésions / hématomes / plaies / brûlures</label><textarea name="r4_lesions"></textarea></div>
+            <div class="fb-field"><label>Notes / observations</label><textarea name="r4_notes"></textarea></div>
+          </div>
+        </div>
+        <div class="fb-pane" id="t-transmission">
+          <div class="fb-pane-header transmission">📞 TRANSMISSION & DEVENIR</div>
+          <div class="fb-grid cols-2">
+            <div class="fb-field"><label>Heure transmission</label><input type="time" name="t_heure"></div>
+            <div class="fb-field"><label>Service contacté</label><div class="fb-radio-group"><label><input type="radio" name="t_service" value="15">SAMU 15</label><label><input type="radio" name="t_service" value="18">Pompiers 18</label><label><input type="radio" name="t_service" value="112">112</label></div></div>
+          </div>
+          <div class="fb-field"><label>Devenir de la victime</label><div class="fb-radio-group"><label><input type="radio" name="t_devenir" value="laissee">Laissée sur place</label><label><input type="radio" name="t_devenir" value="transport">Transport</label><label><input type="radio" name="t_devenir" value="medicalisation">Médicalisation sur place</label><label><input type="radio" name="t_devenir" value="deces">Décès</label></div></div>
+          <div class="fb-grid cols-2">
+            <div class="fb-field"><label>Heure de fin</label><input type="time" name="t_heure_fin"></div>
+            <div class="fb-field"><label>Équipe relais</label><input type="text" name="t_relais"></div>
+          </div>
+          <div class="fb-field"><label>Équipiers présents</label><input type="text" name="t_equipiers"></div>
+          <div class="fb-field"><label>Observations finales</label><textarea name="t_observations"></textarea></div>
+        </div>
+      </form>
+    </section>
+
+    <!-- ===== SECTIONS AVEC RÉFÉRENCES PDF ===== -->
+
+    <section id="protection" class="section">
+      <div class="section-header"><h1>🛡️ Protection & Sécurité <button class="pdf-help" data-page="74">?</button></h1></div>
+      <div class="card">
+        <h2><span>Sécurité sur intervention</span><button class="pdf-help" data-page="77">?</button></h2>
+        <ol class="steps">
+          <li>Approche prudente, évaluer les dangers.</li>
+          <li>Repérer les personnes exposées et le nombre de victimes.</li>
+          <li>Délimiter clairement la zone de danger.</li>
+          <li>Mettre en place les moyens de protection collective.</li>
+          <li>Supprimer immédiatement les dangers si possible.</li>
+          <li>En cas de danger imminent : dégagement d'urgence.</li>
+        </ol>
+        <div class="alert alert-warning"><span class="alert-icon">⚠️</span><div><strong>Règle d'or :</strong> ne jamais devenir une victime supplémentaire.</div></div>
+      </div>
+      <div class="card">
+        <h2><span>Équipement de protection (EPI)</span><button class="pdf-help" data-page="75">?</button></h2>
+        <div class="grid-3">
+          <div class="mini-card"><h4>🧤 Gants</h4><p>Usage unique systématique.</p></div>
+          <div class="mini-card"><h4>👁️ Lunettes</h4><p>Risque de projection.</p></div>
+          <div class="mini-card"><h4>😷 Masque</h4><p>Selon contexte.</p></div>
+          <div class="mini-card"><h4>🦺 Gilet HV</h4><p>Voie publique.</p></div>
+          <div class="mini-card"><h4>⛑️ Casque</h4><p>AVP, chantier.</p></div>
+          <div class="mini-card"><h4>🔦 Lampe</h4><p>Obscurité.</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2><span>Dégagement d'urgence</span><button class="pdf-help" data-page="81">?</button></h2>
+        <ul>
+          <li><strong>Traction par les chevilles</strong> – sol plat.</li>
+          <li><strong>Traction par les poignets</strong> – chevilles inaccessibles.</li>
+          <li><strong>Traction sous les aisselles</strong> – escaliers.</li>
+          <li><strong>Sortie d'un véhicule</strong> – maintien menton + ceinture.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="bilan" class="section">
+      <div class="section-header"><h1>📋 Réalisation des bilans <button class="pdf-help" data-page="36">?</button></h1></div>
+      <div class="card">
+        <h2><span>1<sup>er</sup> regard – Situation</span><button class="pdf-help" data-page="37">?</button></h2>
+        <ul class="checklist">
+          <li>Nature de l'intervention</li>
+          <li>Informations initiales correctes ?</li>
+          <li>Danger immédiat ?</li>
+          <li>Nombre de victimes</li>
+          <li>Moyens suffisants ?</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2><span>2<sup>e</sup> regard – Menaces vitales</span><button class="pdf-help" data-page="38">?</button></h2>
+        <p><strong>« Traiter en priorité ce qui tue en premier ».</strong></p>
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>Menace</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>Hémorragie externe grave</td><td>Compression / garrot</td></tr>
+              <tr><td>VA obstruées</td><td>LVA</td></tr>
+              <tr><td>Inconscience + resp anormale</td><td>RCP</td></tr>
+              <tr><td>Inconscience + resp normale</td><td>PLS</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <h2><span>3<sup>e</sup> regard – Fonctions vitales</span><button class="pdf-help" data-page="39">?</button></h2>
+        <div class="grid-3">
+          <div class="mini-card"><h4>💨 Respiratoire</h4><p>FR, amplitude, bruits, SpO₂.</p></div>
+          <div class="mini-card"><h4>💗 Circulatoire</h4><p>Pouls, TRC, peau, PA.</p></div>
+          <div class="mini-card"><h4>🧠 Neurologique</h4><p>EVDA, motricité, sensibilité, pupilles.</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2><span>4<sup>e</sup> regard – Bilan complémentaire</span><button class="pdf-help" data-page="40">?</button></h2>
+        <h3>PQRST</h3>
+        <ul><li><strong>P</strong>rovoqué par</li><li><strong>Q</strong>ualité</li><li><strong>R</strong>égion</li><li><strong>S</strong>évérité</li><li><strong>T</strong>emporalité</li></ul>
+        <h3>MHTAF</h3>
+        <ul><li><strong>M</strong>aladies</li><li><strong>H</strong>ospitalisations</li><li><strong>T</strong>raitements</li><li><strong>A</strong>llergies</li><li><strong>F</strong>acteurs de risque</li></ul>
+      </div>
+    </section>
+
+    <section id="alerte" class="section">
+      <div class="section-header"><h1>📞 Alerte & Transmission <button class="pdf-help" data-page="43">?</button></h1></div>
+      <div class="card">
+        <h2><span>Numéros d'urgence</span></h2>
+        <div class="grid-3">
+          <div class="mini-card"><h4>15 – SAMU</h4></div>
+          <div class="mini-card"><h4>18 – Pompiers</h4></div>
+          <div class="mini-card"><h4>112 – Européen</h4></div>
+          <div class="mini-card"><h4>114 – SMS urgence</h4></div>
+          <div class="mini-card"><h4>17 – Police</h4></div>
+          <div class="mini-card"><h4>196 – CROSS</h4></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2><span>Structure d'un bilan</span><button class="pdf-help" data-page="43">?</button></h2>
+        <ol class="steps">
+          <li>Identification, motif</li>
+          <li>Circonstances</li>
+          <li>Sexe et âge</li>
+          <li>Plainte principale</li>
+          <li>Détresses identifiées</li>
+          <li>Paramètres physiologiques</li>
+          <li>Antécédents et traitements</li>
+          <li>Gestes entrepris</li>
+          <li>Demande / besoin</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="hemorragie" class="section">
+      <div class="section-header"><h1>🩸 Hémorragies <button class="pdf-help" data-page="126">?</button></h1></div>
+      <div class="card">
+        <h2><span>Hémorragie externe – CAT</span><button class="pdf-help" data-page="127">?</button></h2>
+        <ol class="steps">
+          <li>Se protéger (gants).</li>
+          <li>Compression manuelle directe.</li>
+          <li>Si efficace → pansement compressif.</li>
+          <li>Si inefficace : garrot ou gaze hémostatique.</li>
+          <li>Allonger, couvrir.</li>
+          <li>Surveiller, transmettre.</li>
+        </ol>
+        <div class="diagram">
+          <svg viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg">
+            <rect x="100" y="100" width="400" height="50" rx="25" fill="#fbbf24" stroke="#d97706" stroke-width="2"/>
+            <ellipse cx="300" cy="125" rx="20" ry="8" fill="#dc2626"/>
+            <ellipse cx="300" cy="100" rx="35" ry="20" fill="#fbcfe8" stroke="#831843" stroke-width="2"/>
+            <ellipse cx="300" cy="115" rx="30" ry="18" fill="#fbcfe8" stroke="#831843" stroke-width="2"/>
+            <line x1="300" y1="50" x2="300" y2="85" stroke="#dc2626" stroke-width="3"/>
+            <polygon points="295,85 300,95 305,85" fill="#dc2626"/>
+            <text x="300" y="40" text-anchor="middle" font-size="13" font-weight="bold" fill="#dc2626">PRESSION</text>
+            <text x="300" y="195" text-anchor="middle" font-size="13" font-weight="bold" fill="#1e3a8a">Compression manuelle directe</text>
+          </svg>
+        </div>
+      </div>
+      <div class="card">
+        <h2><span>Garrot</span><button class="pdf-help" data-page="150">?</button></h2>
+        <ol class="steps">
+          <li>5–7 cm de la plaie, pas sur articulation.</li>
+          <li>Serrer jusqu'à arrêt du saignement.</li>
+          <li><strong>Noter l'heure</strong>.</li>
+          <li>Ne jamais desserrer sans avis médical.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2><span>Compression manuelle</span><button class="pdf-help" data-page="142">?</button></h2>
+        <ol class="steps">
+          <li>Appuyer fortement sur l'endroit qui saigne, mains gantées.</li>
+          <li>Interposer compresses / pansement / tissu propre.</li>
+          <li>Maintenir jusqu'au pansement compressif.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2><span>Pansement compressif</span><button class="pdf-help" data-page="158">?</button></h2>
+        <p>Relai de la compression manuelle. Coussin hémostatique ou pansement individuel + bande élastique.</p>
+      </div>
+      <div class="card">
+        <h2><span>Gaze hémostatique</span><button class="pdf-help" data-page="160">?</button></h2>
+        <p>Zone non-garrotable (cou, aisselle, pli de l'aine). Compression au moins 3 min au contact direct.</p>
+      </div>
+      <div class="card">
+        <h2><span>Hémorragies extériorisées</span><button class="pdf-help" data-page="129">?</button></h2>
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>Localisation</th><th>Conduite</th></tr></thead>
+            <tbody>
+              <tr><td>Bouche</td><td>Allongée sur le côté</td></tr>
+              <tr><td>Nez (choc minime)</td><td>Assis tête en avant, mouchage + compression 10 min</td></tr>
+              <tr><td>Conduit auditif</td><td>Suspicion fracture du crâne</td></tr>
+              <tr><td>Vaginale</td><td>Allongée, serviettes</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <h2><span>Section de membre</span><button class="pdf-help" data-page="138">?</button></h2>
+        <ol class="steps">
+          <li>Arrêter l'hémorragie.</li>
+          <li>Pansement compressif sur le moignon.</li>
+          <li>Conditionner segment : champ stérile + sac plastique + sac eau/glace.</li>
+          <li>Acheminer avec la victime.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="ova" class="section">
+      <div class="section-header"><h1>🫁 Obstruction des voies aériennes <button class="pdf-help" data-page="130">?</button></h1></div>
+      <div class="card">
+        <h2><span>Obstruction PARTIELLE</span><button class="pdf-help" data-page="132">?</button></h2>
+        <ol class="steps">
+          <li>Pas de manœuvres.</li>
+          <li>Position confortable.</li>
+          <li>Encourager à tousser.</li>
+          <li>O₂ si besoin, surveillance.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2><span>Obstruction COMPLÈTE</span><button class="pdf-help" data-page="133">?</button></h2>
+        <ol class="steps">
+          <li>1 à 5 claques dans le dos.</li>
+          <li>Si inefficace : 1 à 5 compressions abdominales (Heimlich).</li>
+          <li>Alterner.</li>
+          <li>Femme enceinte / obèse / alité : compressions thoraciques.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2><span>Méthode des claques dans le dos</span><button class="pdf-help" data-page="145">?</button></h2>
+        <p>Talon de la main, entre les omoplates, victime penchée en avant. Nourrisson : à califourchon, tête plus basse.</p>
+      </div>
+      <div class="card">
+        <h2><span>Compressions abdominales (Heimlich)</span><button class="pdf-help" data-page="147">?</button></h2>
+        <p>Poing au-dessus du nombril, tirer vers l'arrière et le haut.</p>
+      </div>
+      <div class="card">
+        <h2><span>Compressions thoraciques (cas particuliers)</span><button class="pdf-help" data-page="148">?</button></h2>
+        <p>Femme enceinte, obèse, alité, nourrisson : milieu du sternum.</p>
+      </div>
+      <div class="card">
+        <h2><span>Si perte de connaissance</span><button class="pdf-help" data-page="111">?</button></h2>
+        <div class="alert alert-danger"><span class="alert-icon">🚨</span><div>Conduite arrêt cardiaque, compressions thoraciques, vérifier la bouche.</div></div>
+      </div>
+    </section>
+
+    <section id="inconscience" class="section">
+      <div class="section-header"><h1>😵 Perte de connaissance <button class="pdf-help" data-page="134">?</button></h1></div>
+      <div class="card">
+        <h2><span>LVA – Non traumatisée</span><button class="pdf-help" data-page="153">?</button></h2>
+        <ol class="steps">
+          <li>Desserrer cravate, col, ceinture.</li>
+          <li>Main sur front, doigts sous menton.</li>
+          <li>Bascule prudente + élévation menton.</li>
+          <li>Retirer corps étranger visible.</li>
+          <li>Rechercher respiration : 10 s max.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2><span>LVA – Victime traumatisée</span><button class="pdf-help" data-page="155">?</button></h2>
+        <p>Élévation du menton seule. Stabilisation manuelle de la tête à 2 mains.</p>
+      </div>
+      <div class="card">
+        <h2><span>PLS à 1 secouriste</span><button class="pdf-help" data-page="173">?</button></h2>
+        <ol class="steps">
+          <li>Bras côté secouriste à angle droit.</li>
+          <li>Dos main contre joue, paume contre paume.</li>
+          <li>Saisir genou opposé, tirer pour pivoter.</li>
+          <li>Hanche et genou à angle droit.</li>
+          <li>Ouvrir la bouche.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2><span>Sauveteur isolé</span><button class="pdf-help" data-page="136">?</button></h2>
+        <p>PLS si non traumatisée, alerte (téléphone mains libres), surveillance respiration.</p>
+      </div>
+    </section>
+
+    <section id="arret" class="section">
+      <div class="section-header"><h1>❤️ Arrêt cardiaque & RCP <button class="pdf-help" data-page="108">?</button></h1></div>
+      <div class="card">
+        <h2><span>Reconnaître</span><button class="pdf-help" data-page="109">?</button></h2>
+        <ul class="checklist">
+          <li>Ne répond pas, ne réagit pas</li>
+          <li>Respiration absente OU anormale (gasps)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2><span>RCP Adulte</span><button class="pdf-help" data-page="111">?</button></h2>
+        <ol class="steps">
+          <li>Faire alerter, demander DAE.</li>
+          <li>30 compressions / 2 insufflations.</li>
+          <li>Mettre DAE en œuvre.</li>
+          <li>Reprendre RCP après chaque choc.</li>
+          <li>O₂ par insufflation.</li>
+          <li>Relais toutes les 2 minutes.</li>
+        </ol>
+        <p>Compressions : centre poitrine, 5–6 cm, 100–120/min.</p>
+      </div>
+      <div class="card">
+        <h2><span>Compressions thoraciques</span><button class="pdf-help" data-page="143">?</button></h2>
+        <p>Adulte : 2 mains, 5–6 cm. Enfant : 1 main, ≈5 cm. Nourrisson : 2 doigts, ≈4 cm.</p>
+      </div>
+      <div class="card">
+        <h2><span>RCP Enfant / Nourrisson</span><button class="pdf-help" data-page="113">?</button></h2>
+        <ul>
+          <li>5 insufflations initiales</li>
+          <li>Cycles 15 / 2</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2><span>Ventilation par méthode orale</span><button class="pdf-help" data-page="166">?</button></h2>
+        <p>Bascule de la tête, pince le nez, bouche-à-bouche, insufflation 1 sec.</p>
+      </div>
+      <div class="card">
+        <h2><span>Ventilation par insufflateur manuel</span><button class="pdf-help" data-page="168">?</button></h2>
+        <p>Masque + insufflateur + ballon-réserve + O₂ à 15 L/min. Pince C-E.</p>
+      </div>
+    </section>
+
+    <section id="dae" class="section">
+      <div class="section-header"><h1>⚡ DAE <button class="pdf-help" data-page="161">?</button></h1></div>
+      <div class="card">
+        <h2><span>5 étapes</span><button class="pdf-help" data-page="162">?</button></h2>
+        <ol class="steps">
+          <li>Mettre en marche.</li>
+          <li>Connecter électrodes (peau nue, sèche).</li>
+          <li>Laisser analyser, ne pas toucher.</li>
+          <li>Délivrer le choc si demandé.</li>
+          <li>Reprendre RCP immédiatement.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2><span>Précautions</span><button class="pdf-help" data-page="163">?</button></h2>
+        <ul>
+          <li>Sécher la peau si humide</li>
+          <li>Raser si poils abondants</li>
+          <li>Pacemaker → électrode à distance</li>
+          <li>Patch médicamenteux → retirer</li>
+          <li>NE JAMAIS toucher pendant analyse / choc</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="resp" class="section">
+      <div class="section-header"><h1>💨 Détresse respiratoire <button class="pdf-help" data-page="123">?</button></h1></div>
+      <div class="card">
+        <h2><span>CAT</span><button class="pdf-help" data-page="125">?</button></h2>
+        <ol class="steps">
+          <li>Position assise / demi-assise.</li>
+          <li>Desserrer vêtements.</li>
+          <li>O₂ haute concentration (15 L/min).</li>
+          <li>Adapter à SpO₂ (94–98 %).</li>
+          <li>Aider traitement.</li>
+          <li>Surveillance.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2><span>Administration d'O₂ par inhalation</span><button class="pdf-help" data-page="175">?</button></h2>
+        <p>MHC (8–15 L/min), masque simple (5–10 L/min), lunettes (1–6 L/min).</p>
+      </div>
+    </section>
+
+    <section id="circ" class="section">
+      <div class="section-header"><h1>💗 Détresse circulatoire <button class="pdf-help" data-page="117">?</button></h1></div>
+      <div class="card">
+        <h2><span>CAT</span><button class="pdf-help" data-page="119">?</button></h2>
+        <ol class="steps">
+          <li>Si hémorragie → l'arrêter en priorité.</li>
+          <li>Allonger à plat dos.</li>
+          <li>O₂ adapté.</li>
+          <li>Lutter contre l'hypothermie.</li>
+          <li>Surveillance rapprochée.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2><span>Réchauffement</span><button class="pdf-help" data-page="181">?</button></h2>
+        <p>Couvertures, tapis isolants, abri du vent, appareils de chauffage.</p>
+      </div>
+    </section>
+
+    <section id="neuro" class="section">
+      <div class="section-header"><h1>🧠 Détresse neurologique <button class="pdf-help" data-page="120">?</button></h1></div>
+      <div class="card">
+        <h2><span>CAT</span><button class="pdf-help" data-page="122">?</button></h2>
+        <p>Allonger, oxygène, glycémie capillaire, surveillance, avis médical urgent.</p>
+      </div>
+      <div class="card">
+        <h2><span>Score EVDA</span><button class="pdf-help" data-page="61">?</button></h2>
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>Score</th><th>État</th></tr></thead>
+            <tbody>
+              <tr><td>E</td><td>Éveillée</td></tr>
+              <tr><td>V</td><td>Réagit à la Voix</td></tr>
+              <tr><td>D</td><td>Réagit à la Douleur</td></tr>
+              <tr><td>A</td><td>Aréactive</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <h2><span>Glycémie capillaire</span><button class="pdf-help" data-page="52">?</button></h2>
+        <p>Hypoglycémie si &lt; 0,6 g/L. Lecteur + bandelette + autopiqueur.</p>
+      </div>
+    </section>
+
+    <section id="malaise" class="section">
+      <div class="section-header"><h1>🤒 Malaises <button class="pdf-help" data-page="199">?</button></h1></div>
+      <div class="card">
+        <h2><span>Conduite générale</span><button class="pdf-help" data-page="201">?</button></h2>
+        <ol class="steps">
+          <li>Mettre au repos.</li>
+          <li>Desserrer vêtements.</li>
+          <li>Aider traitement / sucre.</li>
+          <li>Rassurer.</li>
+          <li>PQRST + MHTAF.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2><span>Aide à la prise de médicaments</span><button class="pdf-help" data-page="207">?</button></h2>
+        <p>Voie sublinguale, orale, spray, auto-injecteur. Sur demande victime ou médecin.</p>
+      </div>
+      <div class="card">
+        <h2><span>Manœuvres physiques (vagal)</span><button class="pdf-help" data-page="210">?</button></h2>
+        <p>Accroupissement, croisement des membres inférieurs, crochetage des doigts.</p>
+      </div>
+    </section>
+
+    <section id="brulures" class="section">
+      <div class="section-header"><h1>🔥 Brûlures <button class="pdf-help" data-page="266">?</button></h1></div>
+      <div class="card">
+        <h2><span>Brûlure thermique</span><button class="pdf-help" data-page="268">?</button></h2>
+        <ol class="steps">
+          <li>Éteindre les flammes.</li>
+          <li>Refroidir à l'eau tempérée si &lt; 30 min, surface &lt; 20 % adulte / 10 % enfant.</li>
+          <li>Ruissellement, sans pression, 10–20 min.</li>
+          <li>Retirer vêtements/bijoux non collés.</li>
+          <li>Couverture isotherme.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2><span>Brûlure électrique</span><button class="pdf-help" data-page="269">?</button></h2>
+        <ul>
+          <li>Couper le courant</li>
+          <li>Rechercher entrée et sortie</li>
+          <li>Avis médical systématique</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2><span>Brûlure chimique</span><button class="pdf-help" data-page="269">?</button></h2>
+        <ul>
+          <li>Retirer vêtements imbibés</li>
+          <li>Laver à grande eau 20 min</li>
+          <li>Œil : maintenir ouvert</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="plaies" class="section">
+      <div class="section-header"><h1>🩹 Plaies <button class="pdf-help" data-page="270">?</button></h1></div>
+      <div class="card">
+        <h2><span>Plaie GRAVE</span><button class="pdf-help" data-page="272">?</button></h2>
+        <ol class="steps">
+          <li>Position d'attente adaptée.</li>
+          <li>NE JAMAIS retirer corps étranger.</li>
+          <li>Pansement stérile.</li>
+          <li>Surveillance.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2><span>Plaie SIMPLE</span><button class="pdf-help" data-page="272">?</button></h2>
+        <ol class="steps">
+          <li>Gants, lavage à l'eau.</li>
+          <li>Pansement.</li>
+          <li>Vaccination antitétanique à jour ?</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2><span>Pansement</span><button class="pdf-help" data-page="335">?</button></h2>
+        <p>Pansement adhésif, individuel ou type C selon la plaie.</p>
+      </div>
+      <div class="card">
+        <h2><span>Traumatisme dentaire</span><button class="pdf-help" data-page="273">?</button></h2>
+        <p>Dent : récupérer par la couronne, conserver dans film alimentaire / lait / salive.</p>
+      </div>
+    </section>
+
+    <section id="trauma" class="section">
+      <div class="section-header"><h1>🦴 Traumatismes des membres <button class="pdf-help" data-page="293">?</button></h1></div>
+      <div class="card">
+        <h2><span>CAT</span><button class="pdf-help" data-page="295">?</button></h2>
+        <ol class="steps">
+          <li>Limiter les mouvements.</li>
+          <li>Position adaptée.</li>
+          <li>Immobiliser avec attelle.</li>
+          <li>Appliquer du froid.</li>
+          <li>Surveillance.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2><span>Attelle modulable</span><button class="pdf-help" data-page="304">?</button></h2>
+        <p>Englober articulations sus- et sous-jacentes.</p>
+      </div>
+      <div class="card">
+        <h2><span>Membre supérieur (écharpes)</span><button class="pdf-help" data-page="309">?</button></h2>
+        <p>Écharpe simple, contre-écharpe, écharpe oblique.</p>
+      </div>
+      <div class="card">
+        <h2><span>Application de froid</span><button class="pdf-help" data-page="329">?</button></h2>
+        <p>Eau + glace ou compresse chimique, dans un linge. Max 20 min.</p>
+      </div>
+      <div class="card">
+        <h2><span>Suspicion traumatisme du rachis</span><button class="pdf-help" data-page="318">?</button></h2>
+        <ol class="steps">
+          <li>Demander de ne pas bouger.</li>
+          <li>Maintien manuel de la tête à 2 mains.</li>
+          <li>Si inconsciente + respire : sur le dos.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2><span>Retrait du casque</span><button class="pdf-help" data-page="327">?</button></h2>
+        <p>À 2 secouristes : un maintient la tête, l'autre retire.</p>
+      </div>
+    </section>
+
+    <section id="noyade" class="section">
+      <div class="section-header"><h1>🌊 Noyade <button class="pdf-help" data-page="244">?</button></h1></div>
+      <div class="card">
+        <h2><span>Spécificités</span><button class="pdf-help" data-page="246">?</button></h2>
+        <ol class="steps">
+          <li>Si arrêt cardiaque → 5 insufflations initiales.</li>
+          <li>O₂ à 15 L/min haute concentration.</li>
+          <li>Sécher thorax avant DAE.</li>
+          <li>NE PAS pratiquer Heimlich.</li>
+          <li>Régurgitation : tourner sur le côté.</li>
+          <li>Réchauffer.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="constantes" class="section">
+      <div class="section-header"><h1>📊 Constantes normales <button class="pdf-help" data-page="47">?</button></h1></div>
+      <div class="card">
+        <h2><span>Fréquence respiratoire</span><button class="pdf-help" data-page="48">?</button></h2>
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>Âge</th><th>Normale</th></tr></thead>
+            <tbody>
+              <tr><td>Adulte</td><td>12–20</td></tr>
+              <tr><td>Enfant</td><td>20–30</td></tr>
+              <tr><td>Nourrisson</td><td>30–40</td></tr>
+              <tr><td>Nouveau-né</td><td>40–60</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <h2><span>Fréquence cardiaque</span><button class="pdf-help" data-page="51">?</button></h2>
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>Âge</th><th>Normale</th></tr></thead>
+            <tbody>
+              <tr><td>Adulte</td><td>60–100</td></tr>
+              <tr><td>Enfant</td><td>70–140</td></tr>
+              <tr><td>Nourrisson</td><td>100–160</td></tr>
+              <tr><td>Nouveau-né</td><td>120–160</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <h2><span>Pression artérielle</span><button class="pdf-help" data-page="54">?</button></h2>
+        <p>Adulte : ≈ 100/80 mmHg. PAS &lt; 90 = alerte.</p>
+      </div>
+      <div class="card">
+        <h2><span>SpO₂</span><button class="pdf-help" data-page="57">?</button></h2>
+        <p>Normale : 94–100 %. Alerte : &lt; 94 %.</p>
+      </div>
+      <div class="card">
+        <h2><span>Mesure de la douleur</span><button class="pdf-help" data-page="65">?</button></h2>
+        <p>EN, EVA, EVS, échelle des 6 visages, EVENDOL. Seuil : EN ≥ 4 / EVS ≥ 2.</p>
+      </div>
+      <div class="card">
+        <h2><span>Recherche des lésions</span><button class="pdf-help" data-page="69">?</button></h2>
+        <p>Examen tête-cou-thorax-abdomen-bassin-dos-membres.</p>
+      </div>
+    </section>
+
+    <section id="hygiene" class="section">
+      <div class="section-header"><h1>🧤 Hygiène & Asepsie <button class="pdf-help" data-page="86">?</button></h1></div>
+      <div class="card">
+        <h2><span>Précautions standards</span><button class="pdf-help" data-page="88">?</button></h2>
+        <ul>
+          <li>Tenue propre, gants à usage unique</li>
+          <li>Friction hydroalcoolique régulière</li>
+          <li>Masque + lunettes si projection</li>
+          <li>DASRI (sac jaune)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2><span>Friction hydroalcoolique</span><button class="pdf-help" data-page="92">?</button></h2>
+        <p>30 secondes minimum. Toutes les surfaces.</p>
+      </div>
+      <div class="card">
+        <h2><span>Retrait des gants</span><button class="pdf-help" data-page="102">?</button></h2>
+        <p>Saisir le poignet sans toucher la peau, retourner.</p>
+      </div>
+      <div class="card">
+        <h2><span>AES (accident d'exposition)</span><button class="pdf-help" data-page="85">?</button></h2>
+        <ol class="steps">
+          <li>Interrompre l'action.</li>
+          <li>Plaie : laver, antiseptie 5 min (Dakin).</li>
+          <li>Œil/muqueuse : rincer 5 min minimum.</li>
+          <li>Rendre compte.</li>
+        </ol>
+      </div>
+    </section>
+
+  </main>
+</div>
+<footer>
+  CETC – Groupe d'intervention &nbsp;•&nbsp; Guide PSE1 (Référentiel National 2024)
+</footer>
+
+<script>
+/* ============== PDF.js SETUP ============== */
+const pdfjsLib = window['pdfjs-dist/build/pdf'];
+if (pdfjsLib) {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+
+/* ============== INDEXED DB POUR STOCKER LE PDF ============== */
+const DB_NAME = 'cetc_pdf_db';
+const STORE_NAME = 'pdfs';
+const PDF_KEY = 'pse2024';
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = () => {
+      const db = req.result;
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        db.createObjectStore(STORE_NAME);
+      }
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function savePDFToDB(arrayBuffer) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    tx.objectStore(STORE_NAME).put(arrayBuffer, PDF_KEY);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function loadPDFFromDB() {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readonly');
+    const req = tx.objectStore(STORE_NAME).get(PDF_KEY);
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function deletePDFFromDB() {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    tx.objectStore(STORE_NAME).delete(PDF_KEY);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+/* ============== PDF VIEWER ============== */
+let pdfDoc = null;
+let currentPage = 1;
+let currentScale = 1.2;
+let renderTask = null;
+
+const pdfModal = document.getElementById('pdf-modal');
+const pdfCanvas = document.getElementById('pdf-canvas');
+const pdfEmpty = document.getElementById('pdf-empty');
+const pdfLoading = document.getElementById('pdf-loading');
+const pdfLoadingText = document.getElementById('pdf-loading-text');
+const pdfPageInfo = document.getElementById('pdf-page-info');
+const pdfGoto = document.getElementById('pdf-goto');
+const pdfFileInput = document.getElementById('pdf-file-input');
+
+function setPDFView(state) {
+  pdfEmpty.style.display = state === 'empty' ? 'block' : 'none';
+  pdfLoading.style.display = state === 'loading' ? 'block' : 'none';
+  pdfCanvas.style.display = state === 'doc' ? 'block' : 'none';
+}
+
+async function renderPage(pageNum) {
+  if (!pdfDoc) return;
+  if (pageNum < 1) pageNum = 1;
+  if (pageNum > pdfDoc.numPages) pageNum = pdfDoc.numPages;
+  currentPage = pageNum;
+  
+  if (renderTask) {
+    try { renderTask.cancel(); } catch(e) {}
+  }
+  
+  const page = await pdfDoc.getPage(pageNum);
+  const viewport = page.getViewport({ scale: currentScale });
+  const ctx = pdfCanvas.getContext('2d');
+  pdfCanvas.width = viewport.width;
+  pdfCanvas.height = viewport.height;
+  
+  renderTask = page.render({ canvasContext: ctx, viewport: viewport });
+  try {
+    await renderTask.promise;
+  } catch (e) {
+    if (e.name !== 'RenderingCancelledException') console.error(e);
+  }
+  
+  pdfPageInfo.textContent = `/ ${pdfDoc.numPages}`;
+  pdfGoto.value = currentPage;
+  pdfGoto.max = pdfDoc.numPages;
+  
+  document.getElementById('pdf-prev').disabled = currentPage <= 1;
+  document.getElementById('pdf-next').disabled = currentPage >= pdfDoc.numPages;
+}
+
+async function loadPDFFromBuffer(buffer) {
+  setPDFView('loading');
+  pdfLoadingText.textContent = 'Chargement du PDF…';
+  try {
+    const cloned = buffer.slice(0);
+    pdfDoc = await pdfjsLib.getDocument({ data: cloned }).promise;
+    setPDFView('doc');
+    return true;
+  } catch (e) {
+    console.error('Erreur chargement PDF:', e);
+    alert('Erreur lors du chargement du PDF : ' + e.message);
+    setPDFView('empty');
+    return false;
+  }
+}
+
+async function openPDFAtPage(pageNum) {
+  pdfModal.classList.add('active');
+  
+  if (!pdfDoc) {
+    setPDFView('loading');
+    pdfLoadingText.textContent = 'Recherche du PDF stocké…';
+    try {
+      const buffer = await loadPDFFromDB();
+      if (buffer) {
+        const ok = await loadPDFFromBuffer(buffer);
+        if (ok) await renderPage(pageNum);
+      } else {
+        setPDFView('empty');
+        // Mémoriser la page demandée pour l'ouvrir après chargement
+        pdfModal.dataset.pendingPage = pageNum;
+      }
+    } catch (e) {
+      setPDFView('empty');
+      pdfModal.dataset.pendingPage = pageNum;
+    }
+  } else {
+    setPDFView('doc');
+    await renderPage(pageNum);
+  }
+}
+
+/* === Ouverture du sélecteur de fichier === */
+document.getElementById('pdf-load-btn').addEventListener('click', () => pdfFileInput.click());
+
+pdfFileInput.addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+    alert('Veuillez sélectionner un fichier PDF.');
+    return;
+  }
+  
+  setPDFView('loading');
+  pdfLoadingText.textContent = 'Lecture du fichier…';
+  
+  try {
+    const buffer = await file.arrayBuffer();
+    pdfLoadingText.textContent = 'Sauvegarde dans le navigateur…';
+    await savePDFToDB(buffer);
+    
+    const ok = await loadPDFFromBuffer(buffer);
+    if (ok) {
+      const page = parseInt(pdfModal.dataset.pendingPage || '1', 10);
+      delete pdfModal.dataset.pendingPage;
+      await renderPage(page);
+    }
+  } catch (e) {
+    console.error(e);
+    alert('Erreur : ' + e.message);
+    setPDFView('empty');
+  }
+});
+
+/* === Navigation === */
+document.getElementById('pdf-prev').addEventListener('click', () => renderPage(currentPage - 1));
+document.getElementById('pdf-next').addEventListener('click', () => renderPage(currentPage + 1));
+pdfGoto.addEventListener('change', () => {
+  const n = parseInt(pdfGoto.value, 10);
+  if (!isNaN(n)) renderPage(n);
+});
+pdfGoto.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    const n = parseInt(pdfGoto.value, 10);
+    if (!isNaN(n)) renderPage(n);
+  }
+});
+
+document.getElementById('pdf-zoom-in').addEventListener('click', () => { currentScale = Math.min(currentScale + 0.2, 3); renderPage(currentPage); });
+document.getElementById('pdf-zoom-out').addEventListener('click', () => { currentScale = Math.max(currentScale - 0.2, 0.5); renderPage(currentPage); });
+document.getElementById('pdf-fit').addEventListener('click', () => {
+  if (!pdfDoc) return;
+  const wrapper = document.getElementById('pdf-canvas-wrapper');
+  const availWidth = wrapper.clientWidth - 40;
+  pdfDoc.getPage(currentPage).then(page => {
+    const viewport = page.getViewport({ scale: 1 });
+    currentScale = availWidth / viewport.width;
+    renderPage(currentPage);
+  });
+});
+
+document.getElementById('pdf-replace').addEventListener('click', async () => {
+  if (confirm('Remplacer le PDF actuel ?\n\nLe PDF actuel sera supprimé du navigateur. Vous serez invité à en charger un nouveau.')) {
+    await deletePDFFromDB();
+    pdfDoc = null;
+    setPDFView('empty');
+  }
+});
+
+document.getElementById('pdf-close').addEventListener('click', () => {
+  pdfModal.classList.remove('active');
+});
+
+pdfModal.addEventListener('click', (e) => {
+  if (e.target === pdfModal) pdfModal.classList.remove('active');
+});
+
+document.addEventListener('keydown', (e) => {
+  if (!pdfModal.classList.contains('active')) return;
+  if (e.key === 'Escape') pdfModal.classList.remove('active');
+  if (e.key === 'ArrowLeft' && pdfDoc) renderPage(currentPage - 1);
+  if (e.key === 'ArrowRight' && pdfDoc) renderPage(currentPage + 1);
+});
+
+/* === Branchement des boutons (?) === */
+document.querySelectorAll('.pdf-help[data-page]').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const page = parseInt(btn.dataset.page, 10);
+    if (!isNaN(page)) openPDFAtPage(page);
+  });
+});
+
+/* ============== NAVIGATION DE L'APP ============== */
+const navButtons = document.querySelectorAll('.nav-list button, .quick-card');
+const sections = document.querySelectorAll('.section');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+const menuToggle = document.getElementById('menuToggle');
+const searchInput = document.getElementById('searchInput');
+
+function showSection(target) {
+  sections.forEach(s => s.classList.remove('active'));
+  const sec = document.getElementById(target);
+  if (sec) sec.classList.add('active');
+  document.querySelectorAll('.nav-list button').forEach(b => {
+    b.classList.toggle('active', b.dataset.target === target);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (window.innerWidth <= 900) {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+  }
+}
+
+navButtons.forEach(btn => {
+  btn.addEventListener('click', () => showSection(btn.dataset.target));
+});
+
+menuToggle.addEventListener('click', () => {
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('active');
+});
+overlay.addEventListener('click', () => {
+  sidebar.classList.remove('open');
+  overlay.classList.remove('active');
+});
+
+const searchIndex = [
+  { target: 'fiche-bilan', keywords: 'fiche bilan formulaire' },
+  { target: 'hemorragie', keywords: 'hémorragie sang saignement compression garrot pansement gaze section membre' },
+  { target: 'ova', keywords: 'obstruction voies aériennes étouffement corps étranger heimlich' },
+  { target: 'inconscience', keywords: 'inconscience perte de connaissance pls lva' },
+  { target: 'arret', keywords: 'arrêt cardiaque rcp réanimation compressions' },
+  { target: 'dae', keywords: 'défibrillateur dae défibrillation choc électrodes' },
+  { target: 'resp', keywords: 'détresse respiratoire respiration asthme oxygène' },
+  { target: 'circ', keywords: 'détresse circulatoire pâleur marbrures' },
+  { target: 'neuro', keywords: 'détresse neurologique avc convulsions glycémie evda' },
+  { target: 'malaise', keywords: 'malaise diabète hypoglycémie asthme allergie' },
+  { target: 'brulures', keywords: 'brûlure thermique électrique chimique' },
+  { target: 'plaies', keywords: 'plaie blessure pansement dent' },
+  { target: 'trauma', keywords: 'traumatisme fracture entorse luxation membre attelle rachis' },
+  { target: 'noyade', keywords: 'noyade immersion eau' },
+  { target: 'protection', keywords: 'protection sécurité epi gants dégagement' },
+  { target: 'bilan', keywords: 'bilan regard examen pqrst mhtaf' },
+  { target: 'alerte', keywords: 'alerte 15 18 112 samu pompiers' },
+  { target: 'constantes', keywords: 'constantes valeurs normales fréquence' },
+  { target: 'hygiene', keywords: 'hygiène asepsie gants friction aes' }
+];
+
+searchInput.addEventListener('input', e => {
+  const q = e.target.value.toLowerCase().trim();
+  if (!q) { showSection('accueil'); return; }
+  const match = searchIndex.find(item => item.keywords.toLowerCase().includes(q));
+  if (match) showSection(match.target);
+});
+
+/* ============== FICHE BILAN ============== */
+const FB_STORAGE_KEY = 'cetc_pse1_fiche_bilan';
+const fbForm = document.getElementById('fb-form');
+const saveIndicator = document.getElementById('fb-save-indicator');
+let saveTimeout;
+const fbTabs = document.querySelectorAll('.fb-tab');
+const fbPanes = document.querySelectorAll('.fb-pane');
+
+fbTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.body.classList.remove('fb-print-mode');
+    fbTabs.forEach(t => t.classList.remove('active'));
+    fbPanes.forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    const target = document.getElementById(tab.dataset.tab);
+    if (target) target.classList.add('active');
+    document.getElementById('fb-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+document.getElementById('fb-show-all').addEventListener('click', () => {
+  if (document.body.classList.contains('fb-print-mode')) {
+    document.body.classList.remove('fb-print-mode');
+    fbTabs[0].click();
+  } else {
+    document.body.classList.add('fb-print-mode');
+    fbTabs.forEach(t => t.classList.remove('active'));
+  }
+});
+
+function fbCollectData() {
+  const data = {};
+  fbForm.querySelectorAll('input, textarea, select').forEach(el => {
+    if (el.type === 'checkbox') data[el.name] = el.checked;
+    else if (el.type === 'radio') { if (el.checked) data[el.name] = el.value; }
+    else if (el.name) data[el.name] = el.value;
+  });
+  return data;
+}
+
+function fbApplyData(data) {
+  if (!data) return;
+  fbForm.querySelectorAll('input, textarea, select').forEach(el => {
+    if (!el.name) return;
+    if (el.type === 'checkbox') el.checked = !!data[el.name];
+    else if (el.type === 'radio') el.checked = (data[el.name] === el.value);
+    else if (data[el.name] !== undefined) el.value = data[el.name];
+  });
+}
+
+function fbSave() {
+  try {
+    const data = fbCollectData();
+    localStorage.setItem(FB_STORAGE_KEY, JSON.stringify(data));
+    saveIndicator.classList.remove('hidden');
+    saveIndicator.textContent = '✓ Sauvegardé à ' + new Date().toLocaleTimeString();
+    clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(() => saveIndicator.classList.add('hidden'), 2000);
+    updateProgress();
+  } catch (e) { console.error(e); }
+}
+
+function fbLoad() {
+  try {
+    const raw = localStorage.getItem(FB_STORAGE_KEY);
+    if (raw) fbApplyData(JSON.parse(raw));
+    updateProgress();
+  } catch (e) { console.error(e); }
+}
+
+function updateProgress() {
+  const sections = [
+    { id: 't-intervention', label: '📍 Intervention', fields: ['date', 'heure_prise_charge', 'poste_secours'] },
+    { id: 't-victime', label: '👤 Victime', fields: ['v_nom', 'v_prenom', 'v_age'] },
+    { id: 't-r1', label: '👁️ 1er R.', fields: ['r1_nature', 'r1_danger'] },
+    { id: 't-r2', label: '🔍 2e R.', fields: ['r2_plainte', 'r2_ova', 'r2_hemorragie'] },
+    { id: 't-r3', label: '🩺 3e R.', fields: ['r3_resp_parle', 'r3_pouls_perc', 'r3_pc'] },
+    { id: 't-r4', label: '📊 4e R.', fields: ['r4_fr', 'r4_fc', 'r4_spo2'] },
+    { id: 't-transmission', label: '📞 Transm.', fields: ['t_heure', 't_devenir'] }
+  ];
+  const data = fbCollectData();
+  const progressEl = document.getElementById('fb-progress');
+  if (!progressEl) return;
+  progressEl.innerHTML = '<span class="fb-progress-label">Avancement :</span>';
+  sections.forEach(s => {
+    const filled = s.fields.some(f => {
+      const v = data[f];
+      return v !== undefined && v !== '' && v !== false;
+    });
+    const pill = document.createElement('span');
+    pill.className = 'fb-progress-pill' + (filled ? ' filled' : '');
+    pill.textContent = s.label;
+    pill.addEventListener('click', () => {
+      document.body.classList.remove('fb-print-mode');
+      const tab = document.querySelector(`[data-tab="${s.id}"]`);
+      if (tab) tab.click();
+    });
+    progressEl.appendChild(pill);
+  });
+}
+
+fbForm.addEventListener('input', () => {
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(fbSave, 500);
+});
+fbForm.addEventListener('change', fbSave);
+
+fbLoad();
+
+const dateField = fbForm.querySelector('[name="date"]');
+if (dateField && !dateField.value) {
+  dateField.value = new Date().toISOString().slice(0, 10);
+}
+
+document.getElementById('fb-export-json').addEventListener('click', () => {
+  const data = fbCollectData();
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const nom = (data.v_nom || 'sans-nom').replace(/[^a-z0-9]/gi, '_');
+  const dateStr = data.date || new Date().toISOString().slice(0, 10);
+  a.href = url;
+  a.download = `bilan_${nom}_${dateStr}.json`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById('fb-import-json').addEventListener('click', () => document.getElementById('fb-import-file').click());
+document.getElementById('fb-import-file').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      fbApplyData(data); fbSave();
+      alert('Fiche chargée.');
+    } catch (err) { alert('Erreur de lecture du fichier.'); }
+  };
+  reader.readAsText(file);
+});
+
+document.getElementById('fb-export-text').addEventListener('click', () => {
+  const data = fbCollectData();
+  const line = (label, val) => val ? `${label}: ${val}\n` : '';
+  let txt = '═══════════════════════════════════════════\n';
+  txt += '       FICHE BILAN D\'INTERVENTION CETC\n';
+  txt += '═══════════════════════════════════════════\n\n';
+  txt += '── INTERVENTION ──\n';
+  txt += line('Date', data.date);
+  txt += line('Heure prise en charge', data.heure_prise_charge);
+  txt += line('Poste', data.poste_secours);
+  txt += line('Adresse', data.adresse_intervention);
+  txt += '\n── VICTIME ──\n';
+  txt += line('Nom Prénom', `${data.v_nom || ''} ${data.v_prenom || ''}`.trim());
+  txt += line('Genre', data.v_genre);
+  txt += line('Âge', data.v_age);
+  txt += line('Téléphone', data.v_tel);
+  txt += '\n── 1er REGARD ──\n';
+  txt += line('Nature', data.r1_nature);
+  txt += line('Danger', data.r1_danger);
+  txt += line('Nb victimes', data.r1_nb_victimes);
+  txt += '\n── 2e REGARD ──\n';
+  txt += line('Plainte', data.r2_plainte);
+  txt += line('OVA', data.r2_ova);
+  txt += line('Hémorragie', data.r2_hemorragie);
+  txt += '\n── 3e REGARD ──\n';
+  txt += line('Détresse vent.', data.r3_detresse_vent);
+  txt += line('Détresse circ.', data.r3_detresse_circ);
+  txt += line('Détresse neuro.', data.r3_detresse_neuro);
+  txt += line('EVDA', data.r3_evda);
+  txt += '\n── 4e REGARD ──\n';
+  txt += line('FR', data.r4_fr);
+  txt += line('FC', data.r4_fc);
+  txt += line('SpO₂', data.r4_spo2);
+  txt += line('PA', data.r4_pa);
+  txt += line('Glycémie', data.r4_glyc);
+  txt += line('Douleur', data.r4_douleur);
+  txt += '\n── TRANSMISSION ──\n';
+  txt += line('Heure', data.t_heure);
+  txt += line('Devenir', data.t_devenir);
+  txt += '\n═══════════════════════════════════════════\n';
+  txt += `Généré le ${new Date().toLocaleString('fr-FR')}\n`;
+  const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const nom = (data.v_nom || 'sans-nom').replace(/[^a-z0-9]/gi, '_');
+  const dateStr = data.date || new Date().toISOString().slice(0, 10);
+  a.href = url;
+  a.download = `bilan_${nom}_${dateStr}.txt`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById('fb-print').addEventListener('click', () => {
+  showSection('fiche-bilan');
+  document.body.classList.add('fb-print-mode');
+  setTimeout(() => {
+    window.print();
+    setTimeout(() => document.body.classList.remove('fb-print-mode'), 500);
+  }, 200);
+});
+
+document.getElementById('fb-reset').addEventListener('click', () => {
+  if (confirm('⚠️ Effacer toute la fiche bilan ?')) {
+    fbForm.reset();
+    localStorage.removeItem(FB_STORAGE_KEY);
+    const dateField = fbForm.querySelector('[name="date"]');
+    if (dateField) dateField.value = new Date().toISOString().slice(0, 10);
+    updateProgress();
+    alert('Fiche réinitialisée.');
+  }
+});
+
+showSection('accueil');
+
+
+/* ==================== MOBILE ENHANCEMENTS ==================== */
+
+/* --- Toast / status --- */
+(function(){
+  const toast = document.createElement('div');
+  toast.className = 'app-status';
+  toast.setAttribute('role', 'status');
+  toast.setAttribute('aria-live', 'polite');
+  document.body.appendChild(toast);
+  let toastTimer = null;
+  window.showAppStatus = function(msg, dur){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), dur || 2400);
+  };
+})();
+
+/* --- Search toggle (mobile) --- */
+(function(){
+  const searchBox = document.getElementById('searchBox');
+  const searchToggle = document.getElementById('searchToggle');
+  const searchClose = document.getElementById('searchClose');
+  const searchInput = document.getElementById('searchInput');
+  if (searchToggle) {
+    searchToggle.addEventListener('click', () => {
+      searchBox.classList.add('open');
+      setTimeout(() => searchInput.focus(), 50);
+    });
+  }
+  if (searchClose) {
+    searchClose.addEventListener('click', () => {
+      searchBox.classList.remove('open');
+      searchInput.value = '';
+      searchInput.dispatchEvent(new Event('input'));
+    });
+  }
+  // ESC ferme la recherche
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && searchBox.classList.contains('open')) {
+      searchBox.classList.remove('open');
+    }
+  });
+})();
+
+/* --- Fermer le drawer en swipe gauche --- */
+(function(){
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  if (!sidebar) return;
+  let startX = null, currentX = null, dragging = false;
+  sidebar.addEventListener('touchstart', (e) => {
+    if (!sidebar.classList.contains('open')) return;
+    startX = e.touches[0].clientX;
+    dragging = true;
+  }, { passive: true });
+  sidebar.addEventListener('touchmove', (e) => {
+    if (!dragging) return;
+    currentX = e.touches[0].clientX;
+    const dx = currentX - startX;
+    if (dx < 0) sidebar.style.transform = `translateX(${dx}px)`;
+  }, { passive: true });
+  sidebar.addEventListener('touchend', () => {
+    if (!dragging) return;
+    dragging = false;
+    const dx = (currentX || startX) - startX;
+    sidebar.style.transform = '';
+    if (dx < -60) {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+    }
+  });
+})();
+
+/* --- PDF : swipe gauche/droite pour changer de page, pinch-zoom, double-tap --- */
+(function(){
+  const wrapper = document.getElementById('pdf-canvas-wrapper');
+  const canvas = document.getElementById('pdf-canvas');
+  if (!wrapper) return;
+
+  let touchStartX = 0, touchStartY = 0, touchStartT = 0;
+  let pinchStartDist = 0, pinchStartScale = 0, isPinching = false;
+  let lastTap = 0;
+
+  function dist(t1, t2){
+    const dx = t1.clientX - t2.clientX, dy = t1.clientY - t2.clientY;
+    return Math.hypot(dx, dy);
+  }
+
+  wrapper.addEventListener('touchstart', (e) => {
+    if (!window.pdfDoc && typeof pdfDoc !== 'undefined') {} // pdfDoc closure
+    if (e.touches.length === 2) {
+      isPinching = true;
+      pinchStartDist = dist(e.touches[0], e.touches[1]);
+      pinchStartScale = currentScale;
+      e.preventDefault();
+    } else if (e.touches.length === 1) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchStartT = Date.now();
+    }
+  }, { passive: false });
+
+  wrapper.addEventListener('touchmove', (e) => {
+    if (isPinching && e.touches.length === 2 && pdfDoc) {
+      const d = dist(e.touches[0], e.touches[1]);
+      const ratio = d / pinchStartDist;
+      const newScale = Math.max(0.5, Math.min(3.5, pinchStartScale * ratio));
+      if (Math.abs(newScale - currentScale) > 0.05) {
+        currentScale = newScale;
+        // throttle: render on touchend
+      }
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  wrapper.addEventListener('touchend', (e) => {
+    if (isPinching) {
+      isPinching = false;
+      if (pdfDoc) renderPage(currentPage);
+      return;
+    }
+    if (e.changedTouches.length !== 1) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    const dt = Date.now() - touchStartT;
+
+    // Double-tap pour ajuster
+    const now = Date.now();
+    if (now - lastTap < 320 && Math.abs(dx) < 10 && Math.abs(dy) < 10) {
+      if (pdfDoc) {
+        const availWidth = wrapper.clientWidth - 20;
+        pdfDoc.getPage(currentPage).then(page => {
+          const v = page.getViewport({ scale: 1 });
+          currentScale = availWidth / v.width;
+          renderPage(currentPage);
+        });
+      }
+      lastTap = 0;
+      return;
+    }
+    lastTap = now;
+
+    // Swipe horizontal pour changer de page (si pas zoomé fortement)
+    if (pdfDoc && Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5 && dt < 500) {
+      // Vérifier qu'on n'est pas en train de scroller horizontalement dans un canvas zoomé
+      if (wrapper.scrollLeft < 5 && dx > 0) {
+        renderPage(currentPage - 1);
+      } else if (wrapper.scrollLeft + wrapper.clientWidth >= wrapper.scrollWidth - 5 && dx < 0) {
+        renderPage(currentPage + 1);
+      }
+    }
+  });
+})();
+
+/* --- PWA: Service Worker externe + Install prompt --- */
+(function(){
+  // Enregistrement du Service Worker (fichier sw.js servi par GitHub Pages en HTTPS)
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js')
+        .then(reg => console.log('[PWA] SW enregistré, scope:', reg.scope))
+        .catch(err => console.warn('[PWA] SW non enregistré:', err.message));
+    });
+  }
+
+  // Bouton "Installer"
+  let deferredPrompt = null;
+  const installBtn = document.getElementById('installBtn');
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (installBtn) installBtn.classList.add('visible');
+  });
+
+  if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const choice = await deferredPrompt.userChoice;
+        if (choice.outcome === 'accepted') {
+          window.showAppStatus && window.showAppStatus('✅ Application installée');
+          installBtn.classList.remove('visible');
+        }
+        deferredPrompt = null;
+      } else {
+        const ua = navigator.userAgent;
+        const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+        if (isIOS) {
+          alert("Pour installer sur iPhone/iPad :\n\n1. Touchez le bouton Partager ⬆️ en bas de Safari\n2. Faites défiler et touchez « Sur l\'écran d\'accueil »\n3. Validez avec « Ajouter »");
+        } else {
+          alert("Pour installer cette application :\n\n• Sur Android Chrome : Menu ⋮ → « Installer l\'application »\n• Sur ordinateur : icône d\'installation dans la barre d\'adresse");
+        }
+      }
+    });
+  }
+
+  window.addEventListener('appinstalled', () => {
+    window.showAppStatus && window.showAppStatus('✅ Application installée');
+    if (installBtn) installBtn.classList.remove('visible');
+  });
+
+  // Sur iOS, beforeinstallprompt n'existe pas : on affiche quand même le bouton
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                       window.navigator.standalone === true;
+  if (!isStandalone && installBtn) {
+    const ua = navigator.userAgent;
+    const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+    if (isIOS) setTimeout(() => installBtn.classList.add('visible'), 1500);
+  }
+
+  // Indicateur connexion
+  window.addEventListener('online',  () => window.showAppStatus && window.showAppStatus('🌐 De nouveau en ligne'));
+  window.addEventListener('offline', () => window.showAppStatus && window.showAppStatus('📴 Mode hors-ligne', 3500));
+
+  // Vérif PDF stocké
+  if (window.indexedDB) {
+    setTimeout(async () => {
+      try {
+        if (typeof loadPDFFromDB === 'function') {
+          const buf = await loadPDFFromDB();
+          if (buf) window.showAppStatus && window.showAppStatus('📖 Référentiel PSE 2024 prêt (hors-ligne)', 2000);
+        }
+      } catch(e){}
+    }, 1200);
+  }
+})();
+
+/* --- Empêche le pull-to-refresh quand on scrolle dans le PDF --- */
+document.getElementById('pdf-modal').addEventListener('touchmove', (e) => {
+  // permet le scroll dans le wrapper mais empêche le pull-to-refresh sur la modal
+}, { passive: true });
+
+</script>
+</body>
+</html>
